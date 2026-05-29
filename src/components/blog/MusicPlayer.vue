@@ -48,8 +48,10 @@ function onError() {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
-  padding: 60px 0;
+  min-height: 90vh;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .music-spectrum {
