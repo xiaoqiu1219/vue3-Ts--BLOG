@@ -35,5 +35,8 @@ coverage
 # Vitest
 __screenshots__/
 
+# Brainstorming visual companion
+.superpowers/
+
 # Vite
 *.timestamp-*-*.mjs
