@@ -21,7 +21,7 @@ function resize() {
 function onMouseMove(e: MouseEvent) {
   mouseX = e.clientX
   mouseY = e.clientY
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 5; i++) {
     particles.push({
       x: mouseX + (Math.random() - 0.5) * 12,
       y: mouseY + (Math.random() - 0.5) * 12,
@@ -29,7 +29,7 @@ function onMouseMove(e: MouseEvent) {
       vy: (Math.random() - 0.5) * 3,
       life: 0,
       maxLife: 40 + Math.random() * 40,
-      size: 10 + Math.random() * 12,
+      size: 2 + Math.random() * 4,
       hue: 200 + Math.random() * 40
     })
   }
