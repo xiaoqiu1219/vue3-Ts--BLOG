@@ -63,6 +63,8 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, nextTick } from 'vue'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import StarryBackground from '@/components/blog/StarryBackground.vue'
 import MouseTrail from '@/components/blog/MouseTrail.vue'
 import MusicPlayer from '@/components/blog/MusicPlayer.vue'
@@ -70,6 +72,11 @@ import TypeWriter from '@/components/blog/TypeWriter.vue'
 import SectionCard from '@/components/blog/SectionCard.vue'
 
 const articles: Array<{ id: number; date: string; title: string; excerpt: string }> = []
+
+onMounted(async () => {
+  await nextTick()
+  ScrollTrigger.refresh()
+})
 
 function scrollDown() {
   window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })

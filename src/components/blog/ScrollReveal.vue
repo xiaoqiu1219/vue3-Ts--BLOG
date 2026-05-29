@@ -1,11 +1,11 @@
 <template>
-  <div ref="el" :class="['scroll-reveal', { revealed: isRevealed }]" :style="{ transitionDelay: `${delay}ms` }">
+  <div ref="el" class="scroll-reveal" :class="{ revealed: isRevealed }" :style="{ transitionDelay: `${delay}ms` }">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -17,7 +17,8 @@ const el = ref<HTMLElement | null>(null)
 const isRevealed = ref(false)
 let st: ScrollTrigger | null = null
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
   if (!el.value) return
   st = ScrollTrigger.create({
     trigger: el.value,
@@ -25,6 +26,7 @@ onMounted(() => {
     onEnter: () => { isRevealed.value = true },
     once: true
   })
+  ScrollTrigger.refresh()
 })
 
 onUnmounted(() => {
