@@ -24,7 +24,9 @@ onMounted(async () => {
     trigger: el.value,
     start: 'top 85%',
     onEnter: () => { isRevealed.value = true },
-    once: true
+    onLeave: () => { isRevealed.value = false },
+    onEnterBack: () => { isRevealed.value = true },
+    onLeaveBack: () => { isRevealed.value = false },
   })
   ScrollTrigger.refresh()
 })
