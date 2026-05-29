@@ -1,7 +1,7 @@
 <template>
   <header class="blog-navbar">
     <div class="blog-navbar-inner">
-      <RouterLink to="/" class="blog-brand">Garvey's Blog</RouterLink>
+      <RouterLink to="/" class="blog-brand">KOKO的博客</RouterLink>
 
       <nav class="blog-nav">
         <RouterLink

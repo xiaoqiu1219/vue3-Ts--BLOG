@@ -6,7 +6,7 @@
     <!-- Hero -->
     <section class="blog-hero">
       <div class="blog-hero-content">
-        <h1 class="hero-title">Garvey's Blog</h1>
+        <h1 class="hero-title">KOKO的博客</h1>
         <p class="hero-subtitle">探索代码、技术与生活的无限可能</p>
         <button class="hero-cta" @click="scrollDown">了解更多</button>
       </div>
