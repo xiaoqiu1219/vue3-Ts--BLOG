@@ -78,6 +78,7 @@ onMounted(async () => {
   ScrollTrigger.refresh()
 })
 
+// 点击"了解更多"按钮，平滑滚动到下一屏
 function scrollDown() {
   window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
 }
@@ -112,10 +113,24 @@ function scrollDown() {
   font-size: 48px;
   font-weight: 800;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, #fff 30%, var(--color-accent-cyan));
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-cyan) 0%,
+    #a78bfa 25%,
+    #f472b6 50%,
+    var(--color-accent) 75%,
+    var(--color-accent-cyan) 100%
+  );
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-flow 4s ease-in-out infinite;
+}
+
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .hero-subtitle {

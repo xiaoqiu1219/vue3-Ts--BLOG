@@ -24,6 +24,7 @@ let timer: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
   let i = 0
+  // 定时逐字打印文本，完成后显示闪烁光标
   timer = setInterval(() => {
     if (i < props.text.length) {
       displayedText.value += props.text[i]

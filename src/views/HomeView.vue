@@ -108,16 +108,19 @@ const { t } = useI18n()
 const childInfo = ref()
 const fatherInfo = ref({ name: 'Data from Parent', number: 144 })
 
+// 读取子组件通过 defineExpose 暴露的引用并递增计数器
 function getInfo() {
   console.log('Child expose:', childInfo.value)
   console.log('Child userName:', childInfo.value?.userName)
   fatherInfo.value.number++
 }
 
+// 子组件点击事件的回调
 const childClick = (id: number, title: string) => {
   console.log('Child event - id:', id, 'title:', title)
 }
 
+// 子组件编辑事件的回调
 const childEditClick = (info: object) => {
   console.log('Child edit event:', info)
 }

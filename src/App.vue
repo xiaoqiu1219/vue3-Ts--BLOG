@@ -6,6 +6,7 @@ import AppFooter from '@/components/common/AppFooter.vue'
 
 const route = useRoute()
 
+// 判断当前是否在练手页面路由下，用于切换主题样式
 const isPractice = computed(() => route.path.startsWith('/practice'))
 </script>
 

@@ -12,12 +12,14 @@ let mouseX = -100
 let mouseY = -100
 let rafId = 0
 
+// 响应窗口大小变化，调整 canvas 画布尺寸
 function resize() {
   if (!canvas.value) return
   canvas.value.width = window.innerWidth
   canvas.value.height = window.innerHeight
 }
 
+// 鼠标移动时生成粒子：每次 5 颗，带随机速度、大小、色相
 function onMouseMove(e: MouseEvent) {
   mouseX = e.clientX
   mouseY = e.clientY
@@ -35,6 +37,7 @@ function onMouseMove(e: MouseEvent) {
   }
 }
 
+// 动画循环：清除上一帧 → 绘制粒子径向渐变发光 → 移除已消亡粒子 → 递归调用
 function animate() {
   if (!ctx || !canvas.value) return
   ctx.clearRect(0, 0, canvas.value.width, canvas.value.height)

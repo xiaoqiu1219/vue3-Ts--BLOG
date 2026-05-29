@@ -55,6 +55,7 @@ const practiceNav = [
   { path: '/practice/modal', label: '练手·弹窗' },
 ]
 
+// 判断当前路由是否匹配导航项，首页精确匹配，其他前缀匹配
 function isActive(path: string) {
   if (path === '/') return route.path === '/'
   return route.path.startsWith(path)

@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+// 计算每颗流星的随机初始位置和动画延迟
 function shootingStyle(i: number) {
   const top = 10 + i * 25 + Math.random() * 15
   const delay = i * 4 + Math.random() * 3

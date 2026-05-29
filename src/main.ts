@@ -1,3 +1,4 @@
+// 应用入口：创建 Vue 实例 → 注册 Pinia 状态管理 → 注册路由 → 挂载到 #app
 import './assets/main.css'
 
 import { createApp } from 'vue'

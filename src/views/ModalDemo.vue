@@ -88,6 +88,7 @@ import { useI18n } from '@/composables/useI18n'
 const { t } = useI18n()
 const $t_html = (key: string) => t(key)
 
+// 显示基础弹窗，支持确认/取消回调并打印结果
 const showBasicModal = async () => {
   const result = await modal.show({
     title: t('modal.basic.btn'),
@@ -98,23 +99,28 @@ const showBasicModal = async () => {
   console.log('Result:', result)
 }
 
+// 显示确认弹窗，用户点击确定或取消
 const showConfirmModal = async () => {
   const result = await modal.confirm(t('modal.confirm.content'), t('modal.confirm.title'))
   console.log(result ? 'User confirmed' : 'User cancelled')
 }
 
+// 显示信息提示弹窗，仅有关闭按钮
 const showInfoModal = async () => {
   await modal.info(t('modal.info.content'))
 }
 
+// 显示警告类型弹窗，带警告样式
 const showWarningModal = async () => {
   await modal.warning(t('modal.warning.content'))
 }
 
+// 显示错误类型弹窗，带错误样式
 const showErrorModal = async () => {
   await modal.error(t('modal.error.content'))
 }
 
+// 显示带 HTML 内容的弹窗，包含表格等富文本
 const showHtmlModal = async () => {
   await modal.show({
     title: t('modal.html.title'),
@@ -132,6 +138,7 @@ const showHtmlModal = async () => {
   })
 }
 
+// 显示带 VNode 内容的弹窗，使用 h() 函数渲染响应式组件
 const showVNodeModal = async () => {
   const vnode = h('div', { style: { padding: '4px' } }, [
     h('h4', { style: { color: '#16a34a', marginBottom: '10px' } }, t('modal.vnode.h4')),
@@ -146,6 +153,7 @@ const showVNodeModal = async () => {
   await modal.show({ title: t('modal.vnode.title'), content: vnode, width: 500 })
 }
 
+// 显示异步操作弹窗，确认后模拟 2 秒延迟
 const showAsyncModal = async () => {
   const result = await modal.show({
     title: t('modal.async.title'),
@@ -158,6 +166,7 @@ const showAsyncModal = async () => {
   if (result) console.log('Operation successful')
 }
 
+// 显示自定义配置弹窗：宽度 600px、不可点击遮罩关闭、无关闭按钮
 const showCustomModal = async () => {
   await modal.show({
     title: t('modal.custom.title'),
@@ -171,6 +180,7 @@ const showCustomModal = async () => {
   })
 }
 
+// 一键关闭当前所有打开的弹窗
 const closeAllModals = () => {
   modal.closeAll()
 }

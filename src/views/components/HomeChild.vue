@@ -28,8 +28,9 @@ import type { FatherData } from '@/views/types/homeChild.ts'
 // defineProps(['fatherInfo'])
 const props = defineProps<{ fatherInfo: FatherData }>()
 
-// 只复制一次，无需 watch
+// 只复制一次，无需 watch——将父组件 props 拷贝到本地 ref 以避免直接修改 props
 const localFatherInfo = ref<FatherData>({ ...props.fatherInfo })
+// 查看父组件传来的数据
 function handleFatherData() {
   console.log('fatherInfo')
 }
@@ -54,7 +55,9 @@ const emit = defineEmits<{
   handleEdit: [info: EmptyObject | InfoObject]
 }>()
 
+// 向父组件发射点击事件，携带 id 和标题
 const handleChildClick = () => emit('handleChildClick', 123, '点击子组件')
+// 向父组件发射编辑事件，携带编辑对象数据
 const handleEdit = () => emit('handleEdit', { name: '子组件名字', number: 1333333333 })
 </script>
 <style lang="less" scoped></style>

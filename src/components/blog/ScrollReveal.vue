@@ -20,6 +20,7 @@ let st: ScrollTrigger | null = null
 onMounted(async () => {
   await nextTick()
   if (!el.value) return
+  // 创建 ScrollTrigger 实例：元素进入视口 85% 时显示，向上滚出时隐藏
   st = ScrollTrigger.create({
     trigger: el.value,
     start: 'top 85%',
@@ -30,6 +31,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  // 组件卸载时销毁 ScrollTrigger 实例，避免内存泄漏
   st?.kill()
 })
 </script>

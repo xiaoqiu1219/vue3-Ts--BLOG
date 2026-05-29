@@ -233,14 +233,19 @@ const messages: Record<Locale, Record<string, string>> = {
   },
 }
 
+// 国际化组合函数，提供翻译、切换语言、设置语言等能力
 export function useI18n() {
+  // 当前语言
   const locale = computed(() => currentLocale.value)
+  // 根据 key 翻译文本，未找到时返回 key 本身
   const t = (key: string): string => {
     return messages[currentLocale.value][key] ?? key
   }
+  // 在中英文之间切换
   const toggleLocale = () => {
     currentLocale.value = currentLocale.value === 'zh' ? 'en' : 'zh'
   }
+  // 设置指定语言
   const setLocale = (locale: Locale) => {
     currentLocale.value = locale
   }

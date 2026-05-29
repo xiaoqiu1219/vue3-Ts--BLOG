@@ -2,7 +2,7 @@ import type { App } from 'vue'
 import { modal, globalConfig, globalI18n } from './modal'
 import type { ModalPluginOptions, ModalOptions, ModalI18n } from './types'
 
-// Vue 插件安装
+// Vue 插件：安装 ModalPlugin 后可通过 app.use() 注册，同时注入 $modal 全局属性和 provide
 export const ModalPlugin = {
   install(app: App, options?: ModalPluginOptions) {
     // 配置全局设置

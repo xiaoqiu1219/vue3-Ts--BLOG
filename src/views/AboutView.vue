@@ -137,15 +137,18 @@ const formVisible = ref(false)
 
 const formData = ref({ name: '', email: '' })
 
+// 确认按钮回调
 const handleConfirm = () => {
   console.log('Confirmed')
   basicVisible.value = false
 }
 
+// 取消按钮回调
 const handleCancel = () => {
   console.log('Cancelled')
 }
 
+// 表单提交回调
 const handleSubmit = () => {
   console.log('Submit:', formData.value)
   formVisible.value = false
@@ -156,6 +159,7 @@ const helloResult = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
+// 调用后端 API 获取消息，处理加载中和错误状态
 const fetchHello = async () => {
   loading.value = true
   errorMessage.value = ''
