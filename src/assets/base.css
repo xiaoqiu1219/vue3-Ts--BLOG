@@ -79,6 +79,16 @@
   --z-modal-backdrop: 30;
   --z-modal: 40;
   --z-toast: 50;
+
+  /* Dark theme tokens */
+  --color-bg-dark: #0a0a1a;
+  --color-bg-dark-secondary: #0f0f2a;
+  --color-bg-dark-tertiary: #151535;
+  --color-text-inverse-secondary: #8892b0;
+  --color-text-inverse-tertiary: #495670;
+  --color-accent: #3b82f6;
+  --color-accent-cyan: #06b6d4;
+  --color-border-dark: rgba(255, 255, 255, 0.08);
 }
 
 /* ===== Reset ===== */
