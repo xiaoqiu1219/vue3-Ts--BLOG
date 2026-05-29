@@ -90,7 +90,8 @@ function createModal(options: ModalOptions): Promise<boolean> {
             resolve(false)
             closeModal(id)
           },
-          ref: (el: InstanceType<typeof Modal>) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ref: (el: any) => {
             if (el) {
               el.open()
             }
