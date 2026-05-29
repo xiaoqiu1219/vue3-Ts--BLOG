@@ -275,18 +275,23 @@ const stopPropagation = (e: Event) => {
 // ==================== 监听器 ====================
 /**
  * 监听 visible 变化
- * @description 控制页面滚动锁定，防止背景页面滚动
+ * @description 控制页面滚动锁定，并用 padding 补偿滚动条宽度，避免页面闪动
  */
 watch(visible, (val) => {
   if (val) {
-    // 弹窗打开时，禁止 body 滚动
+    // 计算滚动条宽度
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+    // 锁定滚动 + 补位，防止页面跳动
     document.body.style.overflow = 'hidden'
-    // 触发打开事件和回调
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`
+    }
     emit('open')
     props.options?.onOpen?.()
   } else {
-    // 弹窗关闭时，恢复 body 滚动
+    // 恢复滚动和 padding
     document.body.style.overflow = ''
+    document.body.style.paddingRight = ''
   }
 })
 
