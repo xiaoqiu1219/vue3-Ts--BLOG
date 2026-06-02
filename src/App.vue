@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/common/AppNavbar.vue'
 import AppFooter from '@/components/common/AppFooter.vue'
+import MusicMini from '@/components/blog/MusicMini.vue'
+import { useMusicStore } from '@/stores/music'
 
 const route = useRoute()
 
 // 判断当前是否在练手页面路由下，用于切换主题样式
 const isPractice = computed(() => route.path.startsWith('/practice'))
+
+// 全局初始化音频元素，确保切换页面时音乐不中断
+const musicStore = useMusicStore()
+onMounted(() => {
+  musicStore.initAudio()
+})
 </script>
 
 <template>
   <div class="app-shell" :class="{ 'practice-mode': isPractice }">
     <AppNavbar />
+    <!-- 全局迷你音乐播放器：非首页时显示在右上角 -->
+    <MusicMini />
     <main class="main-content" :class="{ 'no-padding': !isPractice }">
       <RouterView v-slot="{ Component }">
         <transition name="page-fade" mode="out-in">

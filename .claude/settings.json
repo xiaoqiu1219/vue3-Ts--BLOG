@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "preCommit": [
+      {
+        "command": "npx eslint . --cache --ext .ts,.vue,.tsx 2>&1",
+        "description": "ESLint 代码规范检查（阻塞提交）"
+      },
+      {
+        "command": "npx vue-tsc --noEmit 2>&1",
+        "description": "TypeScript 类型检查（阻塞提交）"
+      }
+    ]
+  }
+}
