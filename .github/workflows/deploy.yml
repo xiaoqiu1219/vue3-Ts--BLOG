@@ -1,0 +1,74 @@
+# GitHub Actions CI/CD：代码检查 → 构建 → 部署到 GitHub Pages
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+# 确保同时只有一个部署任务运行
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # ===== 代码质量检查 =====
+  lint:
+    name: 代码检查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: ESLint
+        run: npx eslint . --cache
+
+      - name: TypeScript 类型检查
+        run: npx vue-tsc --noEmit
+
+  # ===== 构建并部署 =====
+  build-and-deploy:
+    name: 构建 & 部署
+    needs: lint
+    # 仅在 push 到 master 时部署，PR 只做检查
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: 构建项目
+        run: npx vite build
+
+      - name: 配置 GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 上传构建产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
