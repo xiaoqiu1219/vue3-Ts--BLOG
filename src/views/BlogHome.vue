@@ -1,7 +1,6 @@
 <template>
   <div class="blog-home">
     <StarryBackground />
-    <MouseTrail />
 
     <!-- Hero -->
     <section class="blog-hero">
@@ -66,7 +65,6 @@
 import { onMounted, nextTick } from 'vue'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import StarryBackground from '@/components/blog/StarryBackground.vue'
-import MouseTrail from '@/components/blog/MouseTrail.vue'
 import MusicPlayer from '@/components/blog/MusicPlayer.vue'
 import TypeWriter from '@/components/blog/TypeWriter.vue'
 import SectionCard from '@/components/blog/SectionCard.vue'

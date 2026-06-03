@@ -3,6 +3,7 @@ import { computed, onMounted } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/common/AppNavbar.vue'
 import AppFooter from '@/components/common/AppFooter.vue'
+import MouseTrail from '@/components/blog/MouseTrail.vue'
 import MusicMini from '@/components/blog/MusicMini.vue'
 import { useMusicStore } from '@/stores/music'
 
@@ -20,6 +21,7 @@ onMounted(() => {
 
 <template>
   <div class="app-shell" :class="{ 'practice-mode': isPractice }">
+    <MouseTrail />
     <AppNavbar />
     <!-- 全局迷你音乐播放器：非首页时显示在右上角 -->
     <MusicMini />

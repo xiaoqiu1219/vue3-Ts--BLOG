@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 创建路由实例，使用 History 模式，路由均采用懒加载
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  // 每次路由切换滚动到顶部
+  scrollBehavior() {
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
