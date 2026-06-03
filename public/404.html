@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>重定向中...</title>
+  <style>
+    body { visibility: hidden; }
+  </style>
   <script>
-    // GitHub Pages 404 重定向脚本
-    // 将所有路径重定向到 index.html，让 Vue Router 处理
-    var pathSegmentsToKeep = 1; // 保持 /vue3-Ts--BLOG/ 这个基础路径
-    var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-      l.hash
-    );
+    // GitHub Pages SPA 路由重定向 — 在页面渲染前立即执行
+    (function() {
+      var pathSegmentsToKeep = 1;
+      var l = window.location;
+      var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash;
+      l.replace(redirect);
+    })();
+    // 兜底：3 秒后若仍未跳转则显示提示
+    setTimeout(function() {
+      document.body.style.visibility = 'visible';
+    }, 3000);
   </script>
 </head>
 <body>
-  <p>正在重定向到首页...</p>
+  <p>页面不存在，正在尝试跳转...</p>
 </body>
 </html>
