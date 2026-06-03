@@ -44,6 +44,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh; /* 移动端动态视口高度 */
   background: var(--color-bg-dark);
 }
 
@@ -53,6 +54,15 @@ onMounted(() => {
 
 .main-content.no-padding {
   padding: 0;
+}
+
+/* 触控优化 */
+@media (hover: none) and (pointer: coarse) {
+  /* 移动端移除 hover 效果（将由 :active 替代） */
+  a:active,
+  button:active {
+    opacity: 0.7;
+  }
 }
 
 /* Page transitions */

@@ -19,4 +19,17 @@ withDefaults(defineProps<{ delay?: number }>(), { delay: 0 })
   border-radius: var(--radius-lg);
   padding: var(--space-8);
 }
+
+/* ===== H5 移动端适配 ===== */
+@media (max-width: 768px) {
+  .section-card {
+    padding: var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-card {
+    padding: var(--space-4);
+  }
+}
 </style>

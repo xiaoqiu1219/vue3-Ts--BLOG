@@ -422,5 +422,42 @@ const fetchHello = async () => {
   .demo-grid {
     grid-template-columns: 1fr;
   }
+
+  .demo-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .page-desc {
+    font-size: var(--font-size-sm);
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .demo-card-body {
+    padding: var(--space-4);
+  }
+
+  .demo-card-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .form-item input {
+    font-size: var(--font-size-base); /* 防止 iOS 缩放 */
+  }
 }
 </style>

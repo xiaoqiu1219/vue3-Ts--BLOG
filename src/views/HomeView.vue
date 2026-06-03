@@ -426,4 +426,37 @@ const childEditClick = (info: object) => {
     font-size: var(--font-size-xl);
   }
 }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: var(--space-8) 0 var(--space-6);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .hero-desc {
+    font-size: var(--font-size-sm);
+  }
+
+  .hero-badge {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-2);
+  }
+
+  .section-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: var(--font-size-xs);
+    min-height: 40px;
+  }
+
+  .container {
+    padding: 0 var(--space-4);
+  }
+}
 </style>

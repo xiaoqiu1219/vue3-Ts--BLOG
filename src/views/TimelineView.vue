@@ -655,4 +655,78 @@ onUnmounted(() => {
     gap: var(--space-1);
   }
 }
+
+@media (max-width: 480px) {
+  .timeline-hero {
+    min-height: 25vh;
+    padding: var(--space-8) var(--space-4) var(--space-4);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-sm);
+    max-width: 280px;
+  }
+
+  .timeline-container {
+    padding: 0 var(--space-4) var(--space-10);
+  }
+
+  .node-dot {
+    left: 12px;
+  }
+
+  .node-date {
+    padding-left: 36px;
+  }
+
+  .node-card {
+    margin-left: 36px;
+    padding: var(--space-3);
+  }
+
+  .stage-divider {
+    padding-left: 16px;
+  }
+
+  .stage-label {
+    font-size: var(--font-size-sm);
+  }
+
+  .timeline-end {
+    padding-left: 16px;
+  }
+
+  .card-company {
+    font-size: var(--font-size-base);
+  }
+
+  .card-position {
+    font-size: var(--font-size-xs);
+  }
+
+  .project-name {
+    font-size: var(--font-size-sm);
+  }
+
+  .project-desc {
+    font-size: var(--font-size-xs);
+  }
+
+  .project-highlights li {
+    font-size: var(--font-size-xs);
+  }
+
+  .tech-tag {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .empty-stage {
+    padding-left: 52px;
+  }
+}
 </style>

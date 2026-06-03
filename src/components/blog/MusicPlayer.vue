@@ -134,6 +134,113 @@ const translateY = computed(() => {
   justify-content: center;
 }
 
+/* ===== H5 移动端适配 ===== */
+@media (max-width: 768px) {
+  .music-player {
+    min-height: auto;
+    padding: 32px 16px;
+  }
+
+  .player-card {
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 24px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .record-player {
+    width: 260px;
+    height: 280px;
+  }
+
+  .vinyl-stage {
+    width: 230px;
+    height: 230px;
+  }
+
+  .disc-label {
+    width: 80px;
+    height: 80px;
+  }
+
+  .lyrics-panel {
+    width: 100%;
+  }
+
+  .lyrics-header {
+    justify-content: center;
+  }
+
+  .lyrics-window {
+    height: 200px;
+  }
+
+  .lyric-line {
+    text-align: center;
+  }
+
+  .music-btn {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-player {
+    padding: 24px 12px;
+  }
+
+  .player-card {
+    padding: 24px 16px;
+    gap: 24px;
+  }
+
+  .record-player {
+    width: 220px;
+    height: 240px;
+  }
+
+  .vinyl-stage {
+    width: 200px;
+    height: 200px;
+  }
+
+  .disc-label {
+    width: 68px;
+    height: 68px;
+  }
+
+  /* 缩小唱臂尺寸 */
+  .tonearm-arm {
+    height: 95px;
+  }
+
+  .label-brand {
+    font-size: 14px;
+  }
+
+  .label-sub {
+    font-size: 6px;
+  }
+
+  .label-rpm {
+    font-size: 5px;
+  }
+
+  .lyrics-window {
+    height: 160px;
+  }
+
+  .lyric-line {
+    height: 32px;
+    line-height: 32px;
+  }
+
+  .lyric-line.active {
+    font-size: 15px;
+  }
+}
+
 /* ===== 唱片机 ===== */
 .record-player {
   position: relative;

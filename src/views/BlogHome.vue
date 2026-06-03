@@ -251,4 +251,69 @@ function scrollDown() {
   font-size: var(--font-size-xs);
   color: var(--color-accent);
 }
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+    max-width: 280px;
+  }
+
+  .blog-section {
+    padding: 32px 0;
+  }
+
+  .container {
+    padding: 0 var(--space-4);
+  }
+
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-4);
+  }
+
+  .avatar-placeholder {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+  }
+
+  .about-text p {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-sm);
+    max-width: 240px;
+  }
+
+  .hero-cta {
+    padding: 10px 24px;
+    font-size: 13px;
+  }
+
+  .blog-section {
+    padding: 24px 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-4);
+  }
+}
 </style>

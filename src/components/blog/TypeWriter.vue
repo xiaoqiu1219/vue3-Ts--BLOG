@@ -71,4 +71,25 @@ onUnmounted(() => {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+/* ===== H5 移动端适配 ===== */
+@media (max-width: 768px) {
+  .typewriter {
+    padding: 40px 16px;
+  }
+
+  .typewriter-text {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .typewriter {
+    padding: 32px 12px;
+  }
+
+  .typewriter-text {
+    font-size: 17px;
+  }
+}
 </style>

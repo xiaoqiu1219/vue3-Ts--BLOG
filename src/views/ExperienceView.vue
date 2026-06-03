@@ -815,4 +815,117 @@ onUnmounted(() => {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .exp-hero {
+    padding: var(--space-6) var(--space-3) var(--space-4);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .hero-desc {
+    font-size: var(--font-size-xs);
+    max-width: 100%;
+  }
+
+  .hero-stats {
+    gap: var(--space-6);
+    padding: var(--space-4) 0;
+  }
+
+  .stat-num {
+    font-size: var(--font-size-xl);
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .hero-skills {
+    gap: var(--space-1);
+  }
+
+  .skill-pill {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+
+  .exp-horizontal {
+    height: 70vh;
+  }
+
+  .exp-track {
+    padding: 0 var(--space-4);
+  }
+
+  .exp-intro {
+    min-width: 100px;
+    padding-right: var(--space-4);
+  }
+
+  .intro-label {
+    font-size: var(--font-size-sm);
+  }
+
+  .intro-hint {
+    font-size: var(--font-size-xs);
+  }
+
+  .intro-arrow {
+    font-size: 18px;
+  }
+
+  .exp-card {
+    width: 220px;
+    height: 260px;
+  }
+
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  .card-title {
+    font-size: var(--font-size-sm);
+  }
+
+  .card-desc {
+    font-size: var(--font-size-xs);
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .card-body {
+    padding: var(--space-3) var(--space-3) var(--space-2);
+  }
+
+  .card-footer {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .card-tag {
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+
+  .exp-footer {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .footer-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .footer-desc {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-8);
+  }
+
+  .footer-link {
+    font-size: var(--font-size-xs);
+  }
+}
 </style>

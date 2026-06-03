@@ -413,4 +413,31 @@ const closeAllModals = () => {
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .page-header {
+    margin-bottom: var(--space-6);
+  }
+
+  .page-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .page-desc {
+    font-size: var(--font-size-sm);
+  }
+
+  .demo-section {
+    margin-bottom: var(--space-8);
+  }
+
+  .section-title {
+    font-size: var(--font-size-base);
+  }
+
+  .api-signature {
+    font-size: var(--font-size-xs);
+    word-break: break-all;
+  }
+}
 </style>

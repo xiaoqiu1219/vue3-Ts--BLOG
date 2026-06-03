@@ -8,7 +8,7 @@
       @mouseleave="collapse"
     >
       <!-- 边缘拉手（始终可见） -->
-      <div class="mini-handle">
+      <div class="mini-handle" @click.stop="toggleExpand">
         <div class="handle-bar"></div>
         <div class="handle-icon" :class="{ playing: store.isPlaying }">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
@@ -67,6 +67,15 @@ const visible = computed(() => route.path !== '/')
 // 吸附展开状态
 const isExpanded = ref(false)
 let collapseTimer: ReturnType<typeof setTimeout> | null = null
+
+// 触控切换（移动端点击展开/收起）
+function toggleExpand() {
+  if (isExpanded.value) {
+    collapse()
+  } else {
+    expand()
+  }
+}
 
 function expand() {
   if (collapseTimer) {

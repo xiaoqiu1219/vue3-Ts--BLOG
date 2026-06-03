@@ -3,10 +3,11 @@
     <div class="blog-navbar-inner">
       <RouterLink to="/" class="blog-brand">
         <img src="@/assets/cat.jpg" alt="头像" class="brand-avatar" />
-        KOKO的博客
+        <span class="brand-text">KOKO的博客</span>
       </RouterLink>
 
-      <nav class="blog-nav">
+      <!-- 桌面端导航 -->
+      <nav class="blog-nav desktop-nav">
         <RouterLink
           v-for="item in mainNav"
           :key="item.path"
@@ -33,16 +34,40 @@
           </Transition>
         </div>
       </nav>
+
+      <!-- 移动端汉堡按钮 -->
+      <button class="hamburger-btn" @click="mobileOpen = !mobileOpen" aria-label="菜单">
+        <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
+        <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
+        <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
+      </button>
     </div>
+
+    <!-- 移动端下拉菜单 -->
+    <Transition name="mobile-menu-fade">
+      <nav v-if="mobileOpen" class="mobile-nav">
+        <RouterLink
+          v-for="item in allNav"
+          :key="item.path"
+          :to="item.path"
+          class="mobile-nav-link"
+          :class="{ active: isActive(item.path) }"
+          @click="mobileOpen = false"
+        >
+          {{ item.label }}
+        </RouterLink>
+      </nav>
+    </Transition>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 const route = useRoute()
 const open = ref(false)
+const mobileOpen = ref(false)
 
 const mainNav = [
   { path: '/', label: '首页' },
@@ -57,6 +82,9 @@ const practiceNav = [
   { path: '/practice/about', label: '练手·关于' },
   { path: '/practice/modal', label: '练手·弹窗' },
 ]
+
+// 移动端合并所有导航
+const allNav = computed(() => [...mainNav, ...practiceNav])
 
 // 判断当前路由是否匹配导航项，首页精确匹配，其他前缀匹配
 function isActive(path: string) {
@@ -75,16 +103,18 @@ function isActive(path: string) {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border-dark);
+  /* 安全区域适配 */
+  padding-top: var(--safe-area-top);
 }
 
 .blog-navbar-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 0 var(--space-6);
-  gap: var(--space-8);
 }
 
 .blog-brand {
@@ -107,16 +137,19 @@ function isActive(path: string) {
   transition: border-color 0.2s ease;
 }
 
+.brand-text {
+  white-space: nowrap;
+}
+
 .blog-brand:hover .brand-avatar {
   border-color: var(--color-accent-cyan);
 }
 
-.blog-nav {
+/* 桌面端导航 */
+.desktop-nav {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  flex: 1;
-  justify-content: center;
 }
 
 .blog-nav-link {
@@ -127,6 +160,7 @@ function isActive(path: string) {
   border-radius: var(--radius-md);
   transition: color 0.15s ease;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .blog-nav-link:hover {
@@ -180,5 +214,113 @@ function isActive(path: string) {
 .dropdown-fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+/* 汉堡按钮 */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-line.open:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.open:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* 移动端导航 */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-6);
+  background: rgba(10, 10, 26, 0.95);
+  border-bottom: 1px solid var(--color-border-dark);
+}
+
+.mobile-nav-link {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-inverse-secondary);
+  border-radius: var(--radius-md);
+  transition: color 0.15s ease, background 0.15s ease;
+  min-height: var(--touch-target-min);
+  display: flex;
+  align-items: center;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  color: var(--color-accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.mobile-menu-fade-enter-active,
+.mobile-menu-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mobile-menu-fade-enter-from,
+.mobile-menu-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: flex;
+  }
+
+  .brand-text {
+    font-size: var(--font-size-base);
+  }
+
+  .blog-navbar-inner {
+    padding: 0 var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-navbar {
+    height: 56px;
+  }
+
+  .brand-avatar {
+    width: 28px;
+    height: 28px;
+  }
 }
 </style>
