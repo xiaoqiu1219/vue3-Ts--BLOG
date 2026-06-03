@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOKO的博客</title>
+    <script>
+      // 处理 GitHub Pages 404 重定向回来的路径
+      // 将查询参数中的路径恢复为正常的 URL 路径
+      (function() {
+        var l = window.location;
+        if (l.search && l.search.indexOf('?/') !== -1) {
+          var pathSegmentsToKeep = 1; // 保持 /vue3-Ts--BLOG/ 这个基础路径
+          var redirect = l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') +
+            l.search.slice(1).replace(/~/g, '&').replace(/~and~/g, '&').split('&').map(function(segment) {
+              return segment.startsWith('/') ? segment : '';
+            }).join('') +
+            l.hash;
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>
