@@ -1,7 +1,5 @@
 <template>
   <div class="blog-home">
-    <StarryBackground />
-
     <!-- Hero -->
     <section class="blog-hero">
       <div class="blog-hero-content">
@@ -64,7 +62,6 @@
 <script setup lang="ts">
 import { onMounted, nextTick } from 'vue'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import StarryBackground from '@/components/blog/StarryBackground.vue'
 import MusicPlayer from '@/components/blog/MusicPlayer.vue'
 import TypeWriter from '@/components/blog/TypeWriter.vue'
 import SectionCard from '@/components/blog/SectionCard.vue'
@@ -86,7 +83,6 @@ function scrollDown() {
 .blog-home {
   position: relative;
   min-height: 100vh;
-  background: var(--color-bg-dark);
   color: #fff;
 }
 
