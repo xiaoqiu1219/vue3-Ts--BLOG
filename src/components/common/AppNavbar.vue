@@ -1,7 +1,10 @@
 <template>
   <header class="blog-navbar">
     <div class="blog-navbar-inner">
-      <RouterLink to="/" class="blog-brand">KOKO的博客</RouterLink>
+      <RouterLink to="/" class="blog-brand">
+        <img src="@/assets/cat.jpg" alt="头像" class="brand-avatar" />
+        KOKO的博客
+      </RouterLink>
 
       <nav class="blog-nav">
         <RouterLink
@@ -85,11 +88,27 @@ function isActive(path: string) {
 }
 
 .blog-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   font-size: var(--font-size-lg);
   font-weight: 700;
   color: #fff;
   flex-shrink: 0;
   letter-spacing: -0.02em;
+}
+
+.brand-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(6, 182, 212, 0.4);
+  transition: border-color 0.2s ease;
+}
+
+.blog-brand:hover .brand-avatar {
+  border-color: var(--color-accent-cyan);
 }
 
 .blog-nav {
