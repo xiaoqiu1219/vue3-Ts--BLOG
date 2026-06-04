@@ -277,7 +277,7 @@ onUnmounted(() => {
 .timeline-page {
   min-height: 100vh;
   background: var(--color-bg-dark);
-  color: #fff;
+  color: var(--color-heading);
 }
 
 /* ==================== Hero 标题区 ==================== */
@@ -371,7 +371,7 @@ onUnmounted(() => {
 .stage-label {
   font-size: var(--font-size-lg);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
   letter-spacing: 0.05em;
 }
 
@@ -456,7 +456,7 @@ onUnmounted(() => {
 .card-company {
   font-size: var(--font-size-lg);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
 }
 
 .card-position {
@@ -493,7 +493,7 @@ onUnmounted(() => {
 .project-name {
   font-size: var(--font-size-base);
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--color-text-muted);
 }
 
 .project-period {

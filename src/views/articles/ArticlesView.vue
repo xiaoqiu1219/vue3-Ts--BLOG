@@ -89,7 +89,7 @@ const filteredArticles = computed(() => {
 <style scoped>
 .articles-page {
   min-height: 100vh;
-  color: #fff;
+  color: var(--color-heading);
 }
 
 /* ===== Hero ===== */
@@ -222,7 +222,7 @@ const filteredArticles = computed(() => {
 .article-title {
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
 }
 
 .article-excerpt {

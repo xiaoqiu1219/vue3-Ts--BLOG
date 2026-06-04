@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
     <title>KOKO的博客</title>
     <script>
+      // 明暗主题：在页面渲染前读取 localStorage，防止闪烁
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (!theme) theme = 'dark'; // 默认暗色
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+    <script>
       // 处理 GitHub Pages 404 重定向回来的路径
       // 将查询参数中的路径恢复为正常的 URL 路径
       (function() {

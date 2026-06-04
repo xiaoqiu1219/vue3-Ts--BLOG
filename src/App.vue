@@ -7,11 +7,16 @@ import MouseTrail from '@/components/blog/MouseTrail.vue'
 import MusicMini from '@/components/blog/MusicMini.vue'
 import StarryBackground from '@/components/blog/StarryBackground.vue'
 import { useMusicStore } from '@/stores/music'
+import { useThemeStore } from '@/stores/theme'
 
 const route = useRoute()
 
 // 判断当前是否在练手页面路由下，用于切换主题样式
 const isPractice = computed(() => route.path.startsWith('/practice'))
+
+// 主题：博客页（非练手页）受 dark/light 切换影响
+const themeStore = useThemeStore()
+const isDark = computed(() => themeStore.isDark)
 
 // 全局初始化音频元素，确保切换页面时音乐不中断
 const musicStore = useMusicStore()
@@ -22,8 +27,10 @@ onMounted(() => {
 
 <template>
   <div class="app-shell" :class="{ 'practice-mode': isPractice }">
-    <StarryBackground />
-    <MouseTrail />
+    <!-- 星空背景仅暗色模式展示 -->
+    <StarryBackground v-if="isDark" />
+    <!-- 鼠标拖尾仅暗色模式展示 -->
+    <MouseTrail v-if="isDark" />
     <AppNavbar />
     <!-- 全局迷你音乐播放器：非首页时显示在右上角 -->
     <MusicMini />

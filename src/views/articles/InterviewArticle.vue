@@ -136,7 +136,7 @@ onUnmounted(() => {
 .article-page {
   min-height: 100vh;
   background: var(--color-bg-dark);
-  color: #e2e8f0;
+  color: var(--color-text);
   padding-bottom: var(--space-16);
 }
 
@@ -252,7 +252,7 @@ onUnmounted(() => {
 .toc-title {
   font-size: var(--font-size-sm);
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--color-text);
   margin-bottom: var(--space-3);
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--color-border-dark);
@@ -307,7 +307,7 @@ onUnmounted(() => {
 .section-heading {
   font-size: var(--font-size-2xl);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--color-heading);
   margin-bottom: var(--space-8);
   padding-bottom: var(--space-3);
   border-bottom: 2px solid rgba(6, 182, 212, 0.2);
@@ -316,7 +316,7 @@ onUnmounted(() => {
 .question-heading {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--color-text-muted);
   margin-top: var(--space-8);
   margin-bottom: var(--space-4);
   padding-left: var(--space-3);
@@ -337,7 +337,7 @@ onUnmounted(() => {
 
 /* 强调 */
 .answer-body :deep(strong) {
-  color: #e2e8f0;
+  color: var(--color-text);
   font-weight: 600;
 }
 
@@ -411,7 +411,7 @@ onUnmounted(() => {
   padding: var(--space-3) var(--space-4);
   text-align: left;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--color-text);
   background: rgba(6, 182, 212, 0.08);
   border: 1px solid var(--color-border-dark);
   white-space: nowrap;
@@ -501,7 +501,7 @@ onUnmounted(() => {
 }
 
 .footer-back-link:hover {
-  color: #fff;
+  color: var(--color-heading);
   background: rgba(6, 182, 212, 0.15);
   border-color: rgba(6, 182, 212, 0.4);
 }
@@ -537,7 +537,7 @@ onUnmounted(() => {
     padding: var(--space-3) var(--space-5);
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: #e2e8f0;
+    color: var(--color-text);
     background: var(--color-bg-dark-secondary);
     border: 1px solid var(--color-border-dark);
     border-radius: var(--radius-lg);

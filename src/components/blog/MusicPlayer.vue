@@ -470,7 +470,7 @@ const translateY = computed(() => {
 .label-brand {
   font-size: 16px;
   font-weight: 800;
-  color: #fff;
+  color: var(--color-heading);
   letter-spacing: 0.15em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -522,7 +522,7 @@ const translateY = computed(() => {
 .lyrics-title {
   font-size: 18px;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
 }
 
 .lyrics-artist {
@@ -560,7 +560,7 @@ const translateY = computed(() => {
 }
 
 .lyric-line.active {
-  color: #fff;
+  color: var(--color-heading);
   font-weight: 600;
   font-size: 17px;
   text-shadow:
@@ -586,7 +586,7 @@ const translateY = computed(() => {
   color: var(--color-accent);
   font-size: 15px;
   font-weight: 500;
-  background: rgba(10, 10, 26, 0.6);
+  background: var(--color-bg-dark-nav);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;

@@ -119,7 +119,7 @@ function collapse() {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: rgba(10, 10, 26, 0.9);
+  background: var(--color-bg-dark-nav);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -172,7 +172,7 @@ function collapse() {
   align-items: center;
   gap: 10px;
   padding: 10px 16px 10px 12px;
-  background: rgba(10, 10, 26, 0.9);
+  background: var(--color-bg-dark-nav);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -270,7 +270,7 @@ function collapse() {
 .mini-song {
   font-size: 13px;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--color-text);
   line-height: 1;
 }
 
@@ -326,7 +326,7 @@ function collapse() {
 
 .mini-body:hover .mini-btn {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-heading);
   border-color: var(--color-accent);
 }
 

@@ -339,7 +339,7 @@ onUnmounted(() => {
 /* ==================== 页面容器 ==================== */
 .experience-page {
   background: var(--color-bg-dark);
-  color: #fff;
+  color: var(--color-heading);
 }
 
 /* ==================== Hero 区 ==================== */
@@ -501,7 +501,7 @@ onUnmounted(() => {
 .intro-label {
   font-size: var(--font-size-xl);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
   white-space: nowrap;
 }
 
@@ -583,7 +583,7 @@ onUnmounted(() => {
 .card-title {
   font-size: var(--font-size-base);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
   margin-bottom: var(--space-2);
   line-height: 1.4;
 }
@@ -630,7 +630,7 @@ onUnmounted(() => {
   width: 100%;
   padding: var(--space-4);
   font-size: var(--font-size-sm);
-  color: #e2e8f0;
+  color: var(--color-text);
   line-height: 1.7;
   background: var(--color-bg-dark-tertiary);
   border: 1px solid var(--color-accent-cyan);
@@ -703,7 +703,7 @@ onUnmounted(() => {
 .footer-title {
   font-size: var(--font-size-2xl);
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--color-text);
   margin-bottom: var(--space-4);
 }
 

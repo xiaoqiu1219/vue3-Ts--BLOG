@@ -33,6 +33,16 @@
             </div>
           </Transition>
         </div>
+
+        <!-- 明暗主题切换 -->
+        <button
+          class="theme-toggle"
+          @click="themeStore.toggle()"
+          :aria-label="themeStore.isDark ? '切换白天模式' : '切换黑夜模式'"
+          :title="themeStore.isDark ? '切换白天模式' : '切换黑夜模式'"
+        >
+          <span class="theme-icon">{{ themeStore.isDark ? '☀️' : '🌙' }}</span>
+        </button>
       </nav>
 
       <!-- 移动端汉堡按钮 -->
@@ -64,8 +74,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useThemeStore } from '@/stores/theme'
 
 const route = useRoute()
+const themeStore = useThemeStore()
 const open = ref(false)
 const mobileOpen = ref(false)
 
@@ -99,7 +111,7 @@ function isActive(path: string) {
   top: 0;
   z-index: var(--z-sticky);
   height: var(--navbar-height);
-  background: rgba(10, 10, 26, 0.85);
+  background: var(--color-bg-dark-nav);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border-dark);
@@ -123,7 +135,7 @@ function isActive(path: string) {
   gap: var(--space-3);
   font-size: var(--font-size-lg);
   font-weight: 700;
-  color: #fff;
+  color: var(--color-heading);
   flex-shrink: 0;
   letter-spacing: -0.02em;
 }
@@ -164,7 +176,7 @@ function isActive(path: string) {
 }
 
 .blog-nav-link:hover {
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .blog-nav-link.active {
@@ -201,7 +213,7 @@ function isActive(path: string) {
 }
 
 .dropdown-item:hover {
-  color: #fff;
+  color: var(--color-heading);
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -214,6 +226,33 @@ function isActive(path: string) {
 .dropdown-fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-left: var(--space-2);
+  font-size: 16px;
+  background: transparent;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-accent-cyan);
+  background: rgba(6, 182, 212, 0.08);
+}
+
+.theme-icon {
+  line-height: 1;
 }
 
 /* 汉堡按钮 */
@@ -235,7 +274,7 @@ function isActive(path: string) {
   display: block;
   width: 100%;
   height: 2px;
-  background: #fff;
+  background: var(--color-heading);
   border-radius: 1px;
   transition: all 0.3s ease;
 }
@@ -257,7 +296,7 @@ function isActive(path: string) {
   display: none;
   flex-direction: column;
   padding: var(--space-4) var(--space-6);
-  background: rgba(10, 10, 26, 0.95);
+  background: var(--color-bg-dark-nav-solid);
   border-bottom: 1px solid var(--color-border-dark);
 }
 

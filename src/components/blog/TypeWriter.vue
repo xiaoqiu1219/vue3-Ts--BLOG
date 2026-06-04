@@ -55,7 +55,7 @@ onUnmounted(() => {
 }
 
 .typed {
-  color: #e2e8f0;
+  color: var(--color-text);
 }
 
 .cursor {

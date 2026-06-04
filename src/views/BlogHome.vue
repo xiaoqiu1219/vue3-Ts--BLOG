@@ -83,7 +83,7 @@ function scrollDown() {
 .blog-home {
   position: relative;
   min-height: 100vh;
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .blog-hero {
@@ -147,7 +147,7 @@ function scrollDown() {
 
 .hero-cta:hover {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .blog-section {
@@ -166,7 +166,7 @@ function scrollDown() {
   font-size: var(--font-size-2xl);
   font-weight: 700;
   margin-bottom: var(--space-6);
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .article-list {
@@ -193,7 +193,7 @@ function scrollDown() {
 .article-title {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--color-text);
   margin-bottom: 4px;
 }
 
@@ -228,7 +228,7 @@ function scrollDown() {
   justify-content: center;
   font-size: 28px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-heading);
 }
 
 .about-text p {

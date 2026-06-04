@@ -17,7 +17,7 @@
 }
 .placeholder-page h1 {
   font-size: var(--font-size-3xl);
-  color: #fff;
+  color: var(--color-heading);
   margin-bottom: var(--space-4);
 }
 </style>
