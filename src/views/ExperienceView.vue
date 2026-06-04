@@ -89,40 +89,10 @@
 
         <!-- 技术栈分组 -->
         <div class="footer-groups">
-          <div class="footer-group">
-            <h3 class="group-label">前端框架</h3>
+          <div v-for="group in techGroups" :key="group.label" class="footer-group">
+            <h3 class="group-label">{{ group.label }}</h3>
             <div class="group-tags">
-              <span class="g-tag">Vue 2/3</span>
-              <span class="g-tag">TypeScript</span>
-              <span class="g-tag">UniApp</span>
-              <span class="g-tag">Vite</span>
-            </div>
-          </div>
-          <div class="footer-group">
-            <h3 class="group-label">UI 框架</h3>
-            <div class="group-tags">
-              <span class="g-tag">Element-UI</span>
-              <span class="g-tag">View Design</span>
-              <span class="g-tag">Ant Design Vue</span>
-            </div>
-          </div>
-          <div class="footer-group">
-            <h3 class="group-label">微信生态</h3>
-            <div class="group-tags">
-              <span class="g-tag">公众号 JSSDK</span>
-              <span class="g-tag">小程序 API</span>
-              <span class="g-tag">微信支付</span>
-              <span class="g-tag">支付宝支付</span>
-            </div>
-          </div>
-          <div class="footer-group">
-            <h3 class="group-label">工程化 & 其他</h3>
-            <div class="group-tags">
-              <span class="g-tag">Git</span>
-              <span class="g-tag">CI/CD</span>
-              <span class="g-tag">ECharts</span>
-              <span class="g-tag">Canvas</span>
-              <span class="g-tag">Node.js</span>
+              <span v-for="tag in group.tags" :key="tag" class="g-tag">{{ tag }}</span>
             </div>
           </div>
         </div>
@@ -142,7 +112,7 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { RouterLink } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { features, heroSkillPills } from '@/data/features'
+import { features, heroSkillPills, techGroups } from '@/data/features'
 
 gsap.registerPlugin(ScrollTrigger)
 

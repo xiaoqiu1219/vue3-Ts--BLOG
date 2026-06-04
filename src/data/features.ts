@@ -120,3 +120,16 @@ export const heroSkillPills: string[] = [
   'View Design',
   '实名认证',
 ]
+
+/** 底部技术栈分组 */
+export interface TechGroup {
+  label: string
+  tags: string[]
+}
+
+export const techGroups: TechGroup[] = [
+  { label: '前端框架', tags: ['Vue 2/3', 'TypeScript', 'UniApp', 'Vite'] },
+  { label: 'UI 框架', tags: ['Element-UI', 'View Design', 'Ant Design Vue'] },
+  { label: '微信生态', tags: ['公众号 JSSDK', '小程序 API', '微信支付', '支付宝支付'] },
+  { label: '工程化 & 其他', tags: ['Git', 'CI/CD', 'ECharts', 'Canvas', 'Node.js'] },
+]
