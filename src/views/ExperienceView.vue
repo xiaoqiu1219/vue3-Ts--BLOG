@@ -304,12 +304,18 @@ onMounted(async () => {
     },
   })
 
-  // 2. 卡片掉落：从右上角旋转掉落
+  // 2. 卡片交叉入场：奇数从上落下，偶数从下升上
   const cards = gsap.utils.toArray(section.querySelectorAll('.exp-card')) as HTMLElement[]
-  cards.forEach((card) => {
+  cards.forEach((card, i) => {
+    const isOdd = i % 2 === 0
     gsap.fromTo(
       card,
-      { y: -200, rotation: 15, opacity: 0, scale: 0.85 },
+      {
+        y: isOdd ? -200 : 200,
+        rotation: isOdd ? 15 : -10,
+        opacity: 0,
+        scale: 0.85,
+      },
       {
         y: 0,
         rotation: 0,
