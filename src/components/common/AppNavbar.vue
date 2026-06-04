@@ -75,25 +75,12 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
+import { mainNav, practiceNav } from '@/data/navigation'
 
 const route = useRoute()
 const themeStore = useThemeStore()
 const open = ref(false)
 const mobileOpen = ref(false)
-
-const mainNav = [
-  { path: '/', label: '首页' },
-  { path: '/timeline', label: '时间线' },
-  { path: '/articles', label: '文章' },
-  { path: '/experience', label: '经历' },
-  { path: '/friends', label: '友链' },
-]
-
-const practiceNav = [
-  { path: '/practice/home', label: '练手·首页' },
-  { path: '/practice/about', label: '练手·关于' },
-  { path: '/practice/modal', label: '练手·弹窗' },
-]
 
 // 移动端合并所有导航
 const allNav = computed(() => [...mainNav, ...practiceNav])
