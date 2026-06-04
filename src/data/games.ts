@@ -15,6 +15,16 @@ export interface GameItem {
 
 export const games: GameItem[] = [
   {
+    id: 'whack-mole',
+    name: '打地鼠',
+    desc: '地鼠随机冒出，眼疾手快锤爆它们！20 秒倒计时挑战最高分',
+    icon: '🔨',
+    path: '/games/whack-mole',
+    color: '#f59e0b',
+    difficulty: '简单',
+    online: true,
+  },
+  {
     id: 'guess-number',
     name: '猜数字',
     desc: '系统随机生成一个数字，在有限次数内猜对它',

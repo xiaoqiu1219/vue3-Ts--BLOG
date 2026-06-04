@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import('../views/games/GuessNumber.vue'),
     },
     {
+      path: '/games/whack-mole',
+      name: 'game-whack-mole',
+      component: () => import('../views/games/WhackMole.vue'),
+    },
+    {
       path: '/articles/interview-advanced',
       name: 'article-interview-advanced',
       component: () => import('../views/articles/InterviewArticle.vue'),
