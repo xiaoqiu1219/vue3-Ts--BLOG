@@ -24,12 +24,17 @@
       <SectionCard>
         <h2 class="section-title">最新文章</h2>
         <div class="article-list">
-          <div v-for="article in articles" :key="article.id" class="article-card">
+          <RouterLink
+            v-for="article in latestArticles"
+            :key="article.id"
+            :to="article.path"
+            class="article-card"
+          >
             <div class="article-date">{{ article.date }}</div>
             <h3 class="article-title">{{ article.title }}</h3>
             <p class="article-excerpt">{{ article.excerpt }}</p>
-          </div>
-          <p v-if="articles.length === 0" class="empty-hint">文章正在路上，敬请期待...</p>
+          </RouterLink>
+          <p v-if="latestArticles.length === 0" class="empty-hint">文章正在路上，敬请期待...</p>
         </div>
       </SectionCard>
     </section>
@@ -60,13 +65,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, nextTick } from 'vue'
+import { computed, onMounted, nextTick } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import MusicPlayer from '@/components/blog/MusicPlayer.vue'
 import TypeWriter from '@/components/blog/TypeWriter.vue'
 import SectionCard from '@/components/blog/SectionCard.vue'
+import { articles } from '@/views/articles/articles-data'
 
-const articles: Array<{ id: number; date: string; title: string; excerpt: string }> = []
+// 按发布日期降序取最新 3 篇
+const latestArticles = computed(() =>
+  [...articles].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3)
+)
 
 onMounted(async () => {
   await nextTick()
@@ -176,8 +186,15 @@ function scrollDown() {
 }
 
 .article-card {
+  display: block;
   padding: var(--space-4) 0;
   border-bottom: 1px solid var(--color-border-dark);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.article-card:hover {
+  opacity: 0.85;
+  transform: translateX(4px);
 }
 
 .article-card:last-child {
