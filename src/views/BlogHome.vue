@@ -5,6 +5,7 @@
       <div class="blog-hero-content">
         <h1 class="hero-title">KOKO的博客</h1>
         <p class="hero-subtitle">探索代码、技术与生活的无限可能</p>
+        <TypeWriter text="长风破浪会有时，直挂云帆济沧海。" />
         <button class="hero-cta" @click="scrollDown">了解更多</button>
       </div>
     </section>
@@ -12,11 +13,6 @@
     <!-- Music -->
     <section class="blog-section">
       <MusicPlayer />
-    </section>
-
-    <!-- TypeWriter Poem -->
-    <section class="blog-section">
-      <TypeWriter text="长风破浪会有时，直挂云帆济沧海。" />
     </section>
 
     <!-- Latest Articles -->

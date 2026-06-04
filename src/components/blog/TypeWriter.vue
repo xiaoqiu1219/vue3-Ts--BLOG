@@ -44,7 +44,7 @@ onUnmounted(() => {
 <style scoped>
 .typewriter {
   text-align: center;
-  padding: 60px 0;
+  padding: var(--space-2) 0;
 }
 
 .typewriter-text {
@@ -74,20 +74,12 @@ onUnmounted(() => {
 
 /* ===== H5 移动端适配 ===== */
 @media (max-width: 768px) {
-  .typewriter {
-    padding: 40px 16px;
-  }
-
   .typewriter-text {
     font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .typewriter {
-    padding: 32px 12px;
-  }
-
   .typewriter-text {
     font-size: 17px;
   }
