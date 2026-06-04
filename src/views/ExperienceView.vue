@@ -11,17 +11,9 @@
 
         <!-- 快捷数据 -->
         <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-num">5+</span>
-            <span class="stat-label">年经验</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">12</span>
-            <span class="stat-label">核心功能</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">3</span>
-            <span class="stat-label">产品线</span>
+          <div v-for="s in heroStats" :key="s.label" class="stat-item">
+            <span class="stat-num">{{ s.num }}</span>
+            <span class="stat-label">{{ s.label }}</span>
           </div>
         </div>
 
@@ -112,7 +104,7 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { RouterLink } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { features, heroSkillPills, techGroups } from '@/data/features'
+import { features, heroSkillPills, techGroups, heroStats } from '@/data/features'
 
 gsap.registerPlugin(ScrollTrigger)
 

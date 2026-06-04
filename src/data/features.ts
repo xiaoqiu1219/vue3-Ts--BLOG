@@ -108,6 +108,18 @@ export const features: FeatureItem[] = [
   },
 ]
 
+/** Hero 快捷数据 */
+export interface StatItem {
+  num: string
+  label: string
+}
+
+export const heroStats: StatItem[] = [
+  { num: '5+', label: '年经验' },
+  { num: '12', label: '核心功能' },
+  { num: '3', label: '产品线' },
+]
+
 /** 技能标签云 */
 export const heroSkillPills: string[] = [
   'Vue 3',
