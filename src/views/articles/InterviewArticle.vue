@@ -112,7 +112,7 @@ function onScroll() {
   for (let i = sectionElements.length - 1; i >= 0; i--) {
     const el = sectionElements[i]
     if (el && el.offsetTop <= scrollTop) {
-      activeSection.value = sections[i].id
+      activeSection.value = sections[i]?.id || ''
       return
     }
   }

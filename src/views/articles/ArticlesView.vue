@@ -8,30 +8,57 @@
       </div>
     </section>
 
+    <!-- 标签筛选栏 -->
+    <section class="tag-filter-bar container">
+      <button
+        v-for="tag in allTags"
+        :key="tag"
+        class="tag-filter-btn"
+        :class="{ 'tag-active': activeTag === tag }"
+        @click="activeTag = tag"
+      >
+        {{ tag }}
+      </button>
+    </section>
+
     <!-- 文章列表 -->
     <section class="articles-list container">
-      <SectionCard v-for="article in articles" :key="article.id" :delay="article.delay">
-        <RouterLink :to="article.path" class="article-card-link">
-          <div class="article-card">
-            <div class="article-meta">
-              <span class="article-date">{{ article.date }}</span>
-              <span class="article-tag">{{ article.tag }}</span>
+      <template v-if="filteredArticles.length > 0">
+        <SectionCard v-for="article in filteredArticles" :key="article.id" :delay="article.delay">
+          <RouterLink :to="article.path" class="article-card-link">
+            <div class="article-card">
+              <div class="article-meta">
+                <span class="article-date">{{ article.date }}</span>
+                <span class="article-tag">{{ article.tag }}</span>
+              </div>
+              <h2 class="article-title">{{ article.title }}</h2>
+              <p class="article-excerpt">{{ article.excerpt }}</p>
+              <span class="article-read-more">阅读全文 →</span>
             </div>
-            <h2 class="article-title">{{ article.title }}</h2>
-            <p class="article-excerpt">{{ article.excerpt }}</p>
-            <span class="article-read-more">阅读全文 →</span>
-          </div>
-        </RouterLink>
-      </SectionCard>
+          </RouterLink>
+        </SectionCard>
+      </template>
+      <p v-else class="empty-hint">该标签下暂无文章，看看其他的吧~</p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import SectionCard from '@/components/blog/SectionCard.vue'
 
-const articles = [
+interface Article {
+  id: string
+  title: string
+  date: string
+  tag: string
+  excerpt: string
+  path: string
+  delay: number
+}
+
+const articles: Article[] = [
   {
     id: 'interview-advanced',
     title: '高级前端工程师面试精准答案',
@@ -42,6 +69,21 @@ const articles = [
     delay: 0,
   },
 ]
+
+// 提取所有标签（去重），"全部" 始终在最前
+const allTags = computed(() => {
+  const tags = [...new Set(articles.map(a => a.tag))]
+  return ['全部', ...tags]
+})
+
+// 当前激活的筛选标签
+const activeTag = ref('全部')
+
+// 按标签筛选文章
+const filteredArticles = computed(() => {
+  if (activeTag.value === '全部') return articles
+  return articles.filter(a => a.tag === activeTag.value)
+})
 </script>
 
 <style scoped>
@@ -89,6 +131,48 @@ const articles = [
   margin-top: var(--space-4);
   font-size: var(--font-size-lg);
   color: var(--color-text-inverse-secondary);
+}
+
+/* ===== 标签筛选栏 ===== */
+.tag-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-8);
+}
+
+.tag-filter-btn {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-inverse-tertiary);
+  background: transparent;
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tag-filter-btn:hover {
+  color: var(--color-accent-cyan);
+  border-color: rgba(6, 182, 212, 0.4);
+  background: rgba(6, 182, 212, 0.06);
+}
+
+.tag-filter-btn.tag-active {
+  color: var(--color-accent-cyan);
+  background: rgba(6, 182, 212, 0.12);
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+/* ===== 空状态 ===== */
+.empty-hint {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--space-12) 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-inverse-tertiary);
 }
 
 /* ===== 文章列表 ===== */
@@ -173,6 +257,16 @@ const articles = [
     font-size: var(--font-size-base);
   }
 
+  .tag-filter-bar {
+    gap: var(--space-2);
+    padding-bottom: var(--space-6);
+  }
+
+  .tag-filter-btn {
+    padding: var(--space-1) var(--space-4);
+    font-size: var(--font-size-xs);
+  }
+
   .article-title {
     font-size: var(--font-size-lg);
   }
@@ -189,6 +283,18 @@ const articles = [
 
   .hero-desc {
     font-size: var(--font-size-sm);
+  }
+
+  .tag-filter-bar {
+    gap: var(--space-2);
+    padding-bottom: var(--space-4);
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .tag-filter-btn {
+    padding: 4px var(--space-3);
+    font-size: 11px;
   }
 
   .articles-list {
