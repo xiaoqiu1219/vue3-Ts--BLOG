@@ -18,6 +18,24 @@
           {{ item.label }}
         </RouterLink>
 
+        <!-- 小游戏下拉 -->
+        <div class="nav-dropdown" @mouseenter="gamesOpen = true" @mouseleave="gamesOpen = false">
+          <span class="blog-nav-link dropdown-trigger" :class="{ active: isActive('/games') }">🎮 小游戏 ▾</span>
+          <Transition name="dropdown-fade">
+            <div v-if="gamesOpen" class="dropdown-menu">
+              <RouterLink
+                v-for="sub in gamesNav"
+                :key="sub.path"
+                :to="sub.path"
+                class="dropdown-item"
+              >
+                {{ sub.label }}
+              </RouterLink>
+            </div>
+          </Transition>
+        </div>
+
+        <!-- 更多下拉 -->
         <div class="nav-dropdown" @mouseenter="open = true" @mouseleave="open = false">
           <span class="blog-nav-link dropdown-trigger">更多 ▾</span>
           <Transition name="dropdown-fade">
@@ -75,15 +93,16 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
-import { mainNav, practiceNav } from '@/data/navigation'
+import { mainNav, practiceNav, gamesNav } from '@/data/navigation'
 
 const route = useRoute()
 const themeStore = useThemeStore()
 const open = ref(false)
+const gamesOpen = ref(false)
 const mobileOpen = ref(false)
 
 // 移动端合并所有导航
-const allNav = computed(() => [...mainNav, ...practiceNav])
+const allNav = computed(() => [...mainNav, ...gamesNav, ...practiceNav])
 
 // 判断当前路由是否匹配导航项，首页精确匹配，其他前缀匹配
 function isActive(path: string) {

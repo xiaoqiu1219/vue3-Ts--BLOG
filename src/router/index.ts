@@ -33,6 +33,17 @@ const router = createRouter({
       name: 'friends',
       component: () => import('../views/FriendsView.vue'),
     },
+    // ===== 小游戏 =====
+    {
+      path: '/games',
+      name: 'games-hub',
+      component: () => import('../views/games/GamesHub.vue'),
+    },
+    {
+      path: '/games/guess-number',
+      name: 'game-guess-number',
+      component: () => import('../views/games/GuessNumber.vue'),
+    },
     {
       path: '/articles/interview-advanced',
       name: 'article-interview-advanced',

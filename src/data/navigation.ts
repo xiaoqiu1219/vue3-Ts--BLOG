@@ -18,3 +18,8 @@ export const practiceNav: NavItem[] = [
   { path: '/practice/about', label: '练手·关于' },
   { path: '/practice/modal', label: '练手·弹窗' },
 ]
+
+export const gamesNav: NavItem[] = [
+  { path: '/games', label: '🎮 游戏大厅' },
+  { path: '/games/guess-number', label: '🔢 猜数字' },
+]
