@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/articles',
       name: 'articles',
-      component: () => import('../views/ArticlesView.vue'),
+      component: () => import('../views/articles/ArticlesView.vue'),
     },
     {
       path: '/experience',
@@ -32,6 +32,11 @@ const router = createRouter({
       path: '/friends',
       name: 'friends',
       component: () => import('../views/FriendsView.vue'),
+    },
+    {
+      path: '/articles/interview-advanced',
+      name: 'article-interview-advanced',
+      component: () => import('../views/articles/InterviewArticle.vue'),
     },
     {
       path: '/practice/home',
