@@ -1,6 +1,6 @@
 <template>
   <footer class="blog-footer">
-    <p>Built with Vue 3 + TypeScript. © 2026 KOKO的博客</p>
+    <p>基于 Vue 3 + TypeScript 构建 © 2026 KOKO的博客</p>
   </footer>
 </template>
 

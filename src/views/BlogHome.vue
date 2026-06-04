@@ -498,7 +498,7 @@ function scrollDown() {
   transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Intersection Observer 触发后通过 JS 设 width，此处为兜底 */
+/* 滚动观察器触发后通过脚本设宽度，此处为兜底 */
 .skill-bar-fill {
   width: var(--fill, 0%);
 }

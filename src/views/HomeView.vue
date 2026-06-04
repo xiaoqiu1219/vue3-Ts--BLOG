@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <!-- Hero Section -->
+    <!-- Hero 区域 -->
     <section class="hero">
       <div class="container">
         <div class="hero-badge">{{ t('home.badge') }}</div>
@@ -21,7 +21,7 @@
           </RouterLink>
         </div>
 
-        <!-- Feature Cards -->
+        <!-- 功能卡片 -->
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">
@@ -56,7 +56,7 @@
       </div>
     </section>
 
-    <!-- Component Interaction Demo -->
+    <!-- 组件交互演示 -->
     <section class="demo-section">
       <div class="container">
         <div class="section-header">

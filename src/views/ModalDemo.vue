@@ -1,14 +1,14 @@
 <template>
   <div class="modal-page">
     <div class="container">
-      <!-- Page Header -->
+      <!-- 页面头部 -->
       <div class="page-header">
         <span class="page-badge">{{ t('modal.badge') }}</span>
         <h1 class="page-title">{{ t('modal.title') }}</h1>
         <p class="page-desc" v-html="$t_html('modal.desc')"></p>
       </div>
 
-      <!-- Section: Basic Types -->
+      <!-- 基础类型 -->
       <section class="demo-section">
         <h2 class="section-title">{{ t('modal.basic') }}</h2>
         <div class="btn-group">
@@ -18,7 +18,7 @@
         </div>
       </section>
 
-      <!-- Section: Alert Types -->
+      <!-- 提示类型 -->
       <section class="demo-section">
         <h2 class="section-title">{{ t('modal.alert') }}</h2>
         <div class="btn-group">
@@ -27,7 +27,7 @@
         </div>
       </section>
 
-      <!-- Section: Content Types -->
+      <!-- 内容类型 -->
       <section class="demo-section">
         <h2 class="section-title">{{ t('modal.content') }}</h2>
         <div class="btn-group">
@@ -36,7 +36,7 @@
         </div>
       </section>
 
-      <!-- Section: Advanced -->
+      <!-- 高级用法 -->
       <section class="demo-section">
         <h2 class="section-title">{{ t('modal.advanced') }}</h2>
         <div class="btn-group">
@@ -46,7 +46,7 @@
         </div>
       </section>
 
-      <!-- API Reference -->
+      <!-- API 参考 -->
       <section class="demo-section">
         <h2 class="section-title">{{ t('modal.api.ref') }}</h2>
         <div class="api-grid">
@@ -191,7 +191,7 @@ const closeAllModals = () => {
   padding-bottom: var(--space-12);
 }
 
-/* Page Header */
+/* 页面头部 */
 .page-header {
   text-align: center;
   margin-bottom: var(--space-10);
@@ -236,7 +236,7 @@ const closeAllModals = () => {
   color: var(--color-primary);
 }
 
-/* Sections */
+/* 区块样式 */
 .demo-section {
   margin-bottom: var(--space-10);
 }
@@ -256,7 +256,7 @@ const closeAllModals = () => {
   gap: var(--space-3);
 }
 
-/* Buttons */
+/* 按钮样式 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -353,7 +353,7 @@ const closeAllModals = () => {
   background: var(--color-surface-tertiary);
 }
 
-/* API Reference Grid */
+/* API 参考网格 */
 .api-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -395,7 +395,7 @@ const closeAllModals = () => {
   font-size: 0.9em;
 }
 
-/* Responsive */
+/* 响应式 */
 @media (max-width: 768px) {
   .page-title {
     font-size: var(--font-size-3xl);

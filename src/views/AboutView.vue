@@ -1,16 +1,16 @@
 <template>
   <div class="about-page">
     <div class="container">
-      <!-- Page Header -->
+      <!-- 页面头部 -->
       <div class="page-header">
         <span class="page-badge">{{ t('about.badge') }}</span>
         <h1 class="page-title">{{ t('about.title') }}</h1>
         <p class="page-desc" v-html="$t_html('about.desc')"></p>
       </div>
 
-      <!-- Demo Cards -->
+      <!-- 演示卡片 -->
       <div class="demo-grid">
-        <!-- Basic Usage -->
+        <!-- 基础用法 -->
         <div class="demo-card">
           <div class="demo-card-header">
             <h3>{{ t('about.basic.title') }}</h3>
@@ -26,12 +26,12 @@
             @confirm="handleConfirm"
             @cancel="handleCancel"
           >
-            <p>This modal is controlled via <code>v-model</code> on the <code>&lt;Modal&gt;</code> tag.</p>
-            <p style="margin-top:8px">It supports slots, props, and full event handling.</p>
+            <p>此弹窗通过 <code>v-model</code> 绑定在 <code>&lt;Modal&gt;</code> 标签上控制显隐。</p>
+            <p style="margin-top:8px">支持插槽、属性配置和完整的事件处理。</p>
           </Modal>
         </div>
 
-        <!-- Custom Config -->
+        <!-- 自定义配置 -->
         <div class="demo-card">
           <div class="demo-card-header">
             <h3>{{ t('about.custom.title') }}</h3>
@@ -63,7 +63,7 @@
           </Modal>
         </div>
 
-        <!-- Form Modal -->
+        <!-- 表单弹窗 -->
         <div class="demo-card">
           <div class="demo-card-header">
             <h3>{{ t('about.form.title') }}</h3>
@@ -87,7 +87,7 @@
           </Modal>
         </div>
 
-        <!-- Backend API -->
+        <!-- 后端 API -->
         <div class="demo-card">
           <div class="demo-card-header">
             <h3>{{ t('about.api.title') }}</h3>
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <!-- Footer/Slot -->
+        <!-- 底部/插槽 -->
         <div class="demo-card">
           <div class="demo-card-header">
             <h3>{{ t('about.slot.title') }}</h3>
@@ -180,7 +180,7 @@ const fetchHello = async () => {
   padding-bottom: var(--space-12);
 }
 
-/* Page Header */
+/* 页面头部 */
 .page-header {
   text-align: center;
   margin-bottom: var(--space-10);
@@ -225,7 +225,7 @@ const fetchHello = async () => {
   color: var(--color-primary);
 }
 
-/* Demo Grid */
+/* 演示卡片网格 */
 .demo-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -281,7 +281,7 @@ const fetchHello = async () => {
   line-height: 1.6;
 }
 
-/* Buttons */
+/* 按钮样式 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -327,7 +327,7 @@ const fetchHello = async () => {
   border-color: var(--color-border-hover);
 }
 
-/* Spinner */
+/* 加载动画 */
 .spinner {
   width: 16px;
   height: 16px;
@@ -341,7 +341,7 @@ const fetchHello = async () => {
   to { transform: rotate(360deg); }
 }
 
-/* Custom Content */
+/* 自定义内容 */
 .custom-content h4 {
   color: var(--color-primary);
   margin-bottom: var(--space-3);
@@ -358,7 +358,7 @@ const fetchHello = async () => {
   font-size: var(--font-size-sm);
 }
 
-/* Form */
+/* 表单 */
 .form-content {
   display: flex;
   flex-direction: column;
@@ -392,7 +392,7 @@ const fetchHello = async () => {
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-/* API Result */
+/* API 结果 */
 .api-result {
   margin-top: var(--space-3);
   padding: var(--space-3) var(--space-4);
@@ -413,7 +413,7 @@ const fetchHello = async () => {
   font-weight: 500;
 }
 
-/* Responsive */
+/* 响应式 */
 @media (max-width: 768px) {
   .page-title {
     font-size: var(--font-size-3xl);
