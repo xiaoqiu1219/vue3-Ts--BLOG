@@ -6,9 +6,13 @@ export interface SearchParams {
   [key: string]: unknown
 }
 
-export function useSearch(initialValues: SearchParams = {}) {
+/**
+ * 搜索表单状态管理
+ * @param initialValues — 初始值，类型 T 由调用方推断，保留具体属性类型给 v-model 使用
+ */
+export function useSearch<T extends Record<string, unknown>>(initialValues: T) {
   // 表单当前值（搜索字段通过 v-model 绑定）
-  const formData = reactive<SearchParams>({ ...initialValues })
+  const formData = reactive<T>({ ...initialValues })
 
   // 已提交的搜索参数（触发 fetch 用）
   const searchParams = ref<SearchParams>({})
