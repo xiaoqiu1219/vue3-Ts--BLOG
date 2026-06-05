@@ -19,7 +19,7 @@
             type="text"
             class="vd-search-input"
             placeholder="输入关键词筛选..."
-            @keydown.stop
+            @keydown="onSearchKeydown"
           />
         </div>
 
@@ -35,7 +35,7 @@
               v-for="vi in virtualItems"
               :key="filteredOptions[vi.index].value"
               class="vd-option"
-              :class="{ selected: isSelected(filteredOptions[vi.index].value) }"
+              :class="{ selected: isSelected(filteredOptions[vi.index].value), highlighted: vi.index === highlightIndex }"
               :style="{
                 position: 'absolute',
                 top: 0,
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useVirtualizer } from '@tanstack/vue-virtual'
 
 export interface SelectOption {
@@ -155,6 +155,16 @@ function onTriggerKeydown(e: KeyboardEvent) {
   }
 }
 
+// 搜索框键盘事件：Escape 关闭，其他键不冒泡
+function onSearchKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') {
+    open.value = false
+    filterText.value = ''
+    return
+  }
+  e.stopPropagation()
+}
+
 function onListKeydown(e: KeyboardEvent) {
   const len = filteredOptions.value.length
   if (e.key === 'ArrowDown') {
@@ -173,6 +183,13 @@ function onListKeydown(e: KeyboardEvent) {
     filterText.value = ''
   }
 }
+
+// 键盘高亮滚动到可见区域
+watch(highlightIndex, (idx) => {
+  if (idx >= 0) {
+    virtualizer.value.scrollToIndex(idx)
+  }
+})
 
 onMounted(() => document.addEventListener('click', onClickOutside))
 onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
@@ -300,6 +317,11 @@ onBeforeUnmount(() => document.removeEventListener('click', onClickOutside))
 .vd-option.selected {
   color: #409eff;
   background: #f0f7ff;
+}
+
+.vd-option.highlighted {
+  color: #409eff;
+  background: #ecf5ff;
 }
 
 .vd-empty {
