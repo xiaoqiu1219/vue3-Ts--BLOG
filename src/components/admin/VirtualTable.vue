@@ -138,6 +138,7 @@ const totalHeight = computed(() => virtualizer.value.getTotalSize())
   border-bottom: 1px solid #e4e7ed;
   white-space: nowrap;
   user-select: none;
+  text-align: center;
 }
 
 .vt-body-scroll {
@@ -169,6 +170,7 @@ const totalHeight = computed(() => virtualizer.value.getTotalSize())
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1;
+  text-align: center;
 }
 
 /* 骨架屏 */
@@ -202,5 +204,13 @@ const totalHeight = computed(() => virtualizer.value.getTotalSize())
 @media (max-width: 768px) {
   .virtual-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .virtual-table { min-width: 600px; }
+}
+</style>
+
+<!-- 全局样式：插槽内容居中（scoped 样式无法穿透 slot 边界） -->
+<style>
+.virtual-table-wrapper th,
+.virtual-table-wrapper td {
+  text-align: center;
 }
 </style>
