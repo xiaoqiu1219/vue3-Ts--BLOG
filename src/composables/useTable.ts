@@ -15,6 +15,7 @@ export interface PageResult<T> {
 
 export function useTable<T>(fetcher: (params: PageParams) => Promise<PageResult<T>>) {
   const data = ref<T[]>([])
+  const error = ref<string | null>(null)
   const loading = ref(false)
   const total = ref(0)
   const page = ref(1)
@@ -23,6 +24,7 @@ export function useTable<T>(fetcher: (params: PageParams) => Promise<PageResult<
   // 获取数据：loading = true → 请求 → loading = false
   async function fetch(params: PageParams) {
     loading.value = true
+    error.value = null
     try {
       const result = await fetcher({
         page: page.value,
@@ -31,12 +33,16 @@ export function useTable<T>(fetcher: (params: PageParams) => Promise<PageResult<
       })
       data.value = result.data
       total.value = result.total
+    } catch (e: unknown) {
+      error.value = e instanceof Error ? e.message : '请求失败'
+      data.value = []
+      total.value = 0
     } finally {
       loading.value = false
     }
   }
 
-  // 分页变更：更新页码/条数后立即触发 fetch
+  // 分页变更：更新页码/条数（由外部 watcher 触发 fetch）
   async function onPageChange({ page: p, pageSize: ps }: { page: number; pageSize: number }) {
     // pageSize 变化时回到第一页
     if (ps !== pageSize.value) {
@@ -47,5 +53,10 @@ export function useTable<T>(fetcher: (params: PageParams) => Promise<PageResult<
     pageSize.value = ps
   }
 
-  return { data, loading, total, page, pageSize, fetch, onPageChange }
+  // 刷新当前页（如删除/编辑后重新加载）
+  async function refresh() {
+    await fetch({ page: page.value, pageSize: pageSize.value })
+  }
+
+  return { data, loading, error, total, page, pageSize, fetch, onPageChange, refresh }
 }
