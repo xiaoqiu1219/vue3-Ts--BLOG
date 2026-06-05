@@ -33,9 +33,9 @@
           <div :style="{ height: totalHeight + 'px', position: 'relative' }">
             <div
               v-for="vi in virtualItems"
-              :key="filteredOptions[vi.index].value"
+              :key="getOption(vi.index).value"
               class="vd-option"
-              :class="{ selected: isSelected(filteredOptions[vi.index].value), highlighted: vi.index === highlightIndex }"
+              :class="{ selected: isSelected(getOption(vi.index).value), highlighted: vi.index === highlightIndex }"
               :style="{
                 position: 'absolute',
                 top: 0,
@@ -44,9 +44,9 @@
                 height: vi.size + 'px',
                 transform: `translateY(${vi.start}px)`,
               }"
-              @click="select(filteredOptions[vi.index])"
+              @click="select(getOption(vi.index))"
             >
-              {{ filteredOptions[vi.index].label }}
+              {{ getOption(vi.index).label }}
             </div>
           </div>
         </div>
@@ -115,6 +115,11 @@ const virtualizer = useVirtualizer(
 const virtualItems = computed(() => virtualizer.value.getVirtualItems())
 const totalHeight = computed(() => virtualizer.value.getTotalSize())
 
+/** 安全获取选项：virtualizer 保证 index 始终在 filteredOptions 范围内 */
+function getOption(index: number): SelectOption {
+  return filteredOptions.value[index]!
+}
+
 function isSelected(value: string | number) {
   return value === props.modelValue
 }
@@ -176,7 +181,7 @@ function onListKeydown(e: KeyboardEvent) {
   } else if (e.key === 'Enter') {
     e.preventDefault()
     if (highlightIndex.value >= 0 && highlightIndex.value < len) {
-      select(filteredOptions.value[highlightIndex.value])
+      select(filteredOptions.value[highlightIndex.value]!)
     }
   } else if (e.key === 'Escape') {
     open.value = false
