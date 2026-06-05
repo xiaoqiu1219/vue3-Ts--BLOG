@@ -3,10 +3,23 @@
 import { get } from './request'
 import type { PageResult, PageParams } from '@/composables/useTable'
 
+// ===== 真实 API =====
+
+export interface AdminUser {
+  id: number
+  name: string
+  email: string
+  role: string
+  status: string
+  department: string
+  city: string
+  createdAt: string
+}
+
 // ===== Mock 数据生成器 =====
 
 // 模拟 10 万条用户数据，用于展示虚拟表格性能
-function generateMockUsers(total: number) {
+function generateMockUsers(total: number): AdminUser[] {
   const roles = ['管理员', '编辑', '普通用户', '访客']
   const statuses = ['启用', '禁用']
   const departments = [
@@ -18,16 +31,16 @@ function generateMockUsers(total: number) {
     '西安', '重庆', '长沙', '郑州', '苏州', '天津', '青岛', '厦门',
   ]
 
-  const users = []
+  const users: AdminUser[] = []
   for (let i = 1; i <= total; i++) {
     users.push({
       id: i,
       name: `用户${String(i).padStart(6, '0')}`,
       email: `user${i}@example.com`,
-      role: roles[i % roles.length],
-      status: statuses[i % statuses.length],
-      department: departments[i % departments.length],
-      city: cities[i % cities.length],
+      role: roles[i % roles.length]!,
+      status: statuses[i % statuses.length]!,
+      department: departments[i % departments.length]!,
+      city: cities[i % cities.length]!,
       createdAt: new Date(2024, 0, 1 + (i % 365)).toISOString().slice(0, 10),
     })
   }
@@ -37,7 +50,7 @@ function generateMockUsers(total: number) {
 const allMockUsers = generateMockUsers(100000)
 
 // Mock 数据获取函数：支持搜索过滤 + 分页
-export async function mockFetchUsers(params: PageParams): Promise<PageResult<unknown>> {
+export async function mockFetchUsers(params: PageParams): Promise<PageResult<AdminUser>> {
   // 模拟网络延迟
   await new Promise((resolve) => setTimeout(resolve, 300 + Math.random() * 400))
 
@@ -89,17 +102,6 @@ export async function mockFetchUsers(params: PageParams): Promise<PageResult<unk
 }
 
 // ===== 真实 API =====
-
-export interface AdminUser {
-  id: number
-  name: string
-  email: string
-  role: string
-  status: string
-  department: string
-  city: string
-  createdAt: string
-}
 
 // 真实 API 获取用户列表（接口路径按实际后端调整）
 export async function fetchUsers(params: PageParams): Promise<PageResult<AdminUser>> {
