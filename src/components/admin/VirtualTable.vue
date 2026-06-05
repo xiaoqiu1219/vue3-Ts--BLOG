@@ -53,11 +53,13 @@
                       class="vt-row"
                       :class="{ 'vt-row-striped': vi.index % 2 === 0 }"
                     >
-                      <slot name="table-row" :row="data[vi.index]" :index="vi.index">
-                        <td v-for="col in columns" :key="col.key" :style="{ textAlign: col.align || 'left' }">
-                          {{ (data[vi.index] as any)?.[col.key] }}
-                        </td>
-                      </slot>
+                      <template v-if="data[vi.index]">
+                        <slot name="table-row" :row="data[vi.index]" :index="vi.index">
+                          <td v-for="col in columns" :key="col.key" :style="{ textAlign: col.align || 'left' }">
+                            {{ data[vi.index]![col.key] }}
+                          </td>
+                        </slot>
+                      </template>
                     </tr>
                   </tbody>
                 </table>
@@ -70,7 +72,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Record<string, unknown>">
 import { ref, computed } from 'vue'
 import { useVirtualizer } from '@tanstack/vue-virtual'
 
@@ -82,7 +84,7 @@ export interface ColumnDef {
 }
 
 const props = withDefaults(defineProps<{
-  data: Record<string, unknown>[]
+  data: T[]
   columns: ColumnDef[]
   loading?: boolean
   rowHeight?: number

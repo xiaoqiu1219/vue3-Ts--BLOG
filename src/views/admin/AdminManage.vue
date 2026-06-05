@@ -63,27 +63,27 @@
 
         <!-- 行渲染插槽 -->
         <template #table-row="{ row }">
-          <td style="width: 80px">{{ (row as UserRow).id }}</td>
-          <td style="width: 140px">{{ (row as UserRow).name }}</td>
-          <td style="width: 200px">{{ (row as UserRow).email }}</td>
+          <td style="width: 80px">{{ row.id }}</td>
+          <td style="width: 140px">{{ row.name }}</td>
+          <td style="width: 200px">{{ row.email }}</td>
           <td style="width: 100px">
             <span
               class="role-tag"
-              :class="{ 'role-admin': (row as UserRow).role === '管理员' }"
+              :class="{ 'role-admin': row.role === '管理员' }"
             >
-              {{ (row as UserRow).role }}
+              {{ row.role }}
             </span>
           </td>
           <td style="width: 80px">
             <span
               class="status-dot"
-              :class="(row as UserRow).status === '启用' ? 'status-on' : 'status-off'"
+              :class="row.status === '启用' ? 'status-on' : 'status-off'"
             ></span>
-            {{ (row as UserRow).status }}
+            {{ row.status }}
           </td>
-          <td style="width: 120px">{{ (row as UserRow).department }}</td>
-          <td style="width: 100px">{{ (row as UserRow).city }}</td>
-          <td style="width: 140px">{{ (row as UserRow).createdAt }}</td>
+          <td style="width: 120px">{{ row.department }}</td>
+          <td style="width: 100px">{{ row.city }}</td>
+          <td style="width: 140px">{{ row.createdAt }}</td>
         </template>
       </VirtualTable>
 
