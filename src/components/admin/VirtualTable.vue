@@ -43,7 +43,7 @@
                   <tbody>
                     <tr
                       v-for="vi in virtualItems"
-                      :key="(data[vi.index] as any)?.id ?? vi.index"
+                      :key="vi.index"
                       :style="{
                         position: 'absolute',
                         top: 0, left: 0, width: '100%',
@@ -53,13 +53,11 @@
                       class="vt-row"
                       :class="{ 'vt-row-striped': vi.index % 2 === 0 }"
                     >
-                      <template v-if="data[vi.index]">
-                        <slot name="table-row" :row="data[vi.index]" :index="vi.index">
-                          <td v-for="col in columns" :key="col.key" :style="{ textAlign: col.align || 'left' }">
-                            {{ data[vi.index]![col.key] }}
-                          </td>
-                        </slot>
-                      </template>
+                      <slot name="table-row" :row="getRow(vi.index)" :index="vi.index">
+                        <td v-for="col in columns" :key="col.key" :style="{ textAlign: col.align || 'center' }">
+                          {{ getRow(vi.index)[col.key] }}
+                        </td>
+                      </slot>
                     </tr>
                   </tbody>
                 </table>
@@ -97,6 +95,11 @@ const props = withDefaults(defineProps<{
 
 const scrollRef = ref<HTMLElement | null>(null)
 const tableWrapperRef = ref<HTMLElement | null>(null)
+
+/** 安全获取行数据：virtualizer 保证 index 始终在 data 范围内 */
+function getRow(index: number): T {
+  return props.data[index]!
+}
 
 const virtualizer = useVirtualizer(
   computed(() => ({
