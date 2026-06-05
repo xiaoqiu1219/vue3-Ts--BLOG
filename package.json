@@ -17,6 +17,7 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@tanstack/vue-virtual": "^3.13.28",
     "axios": "^1.7.3",
     "gsap": "^3.15.0",
     "pinia": "^3.0.4",
