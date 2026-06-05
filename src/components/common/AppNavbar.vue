@@ -41,6 +41,15 @@
           <Transition name="dropdown-fade">
             <div v-if="open" class="dropdown-menu">
               <RouterLink
+                v-for="sub in adminNav"
+                :key="sub.path"
+                :to="sub.path"
+                class="dropdown-item"
+              >
+                {{ sub.label }}
+              </RouterLink>
+              <div class="dropdown-divider"></div>
+              <RouterLink
                 v-for="sub in practiceNav"
                 :key="sub.path"
                 :to="sub.path"
@@ -93,7 +102,7 @@
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
-import { mainNav, practiceNav, gamesNav } from '@/data/navigation'
+import { mainNav, practiceNav, gamesNav, adminNav } from '@/data/navigation'
 
 const route = useRoute()
 const themeStore = useThemeStore()
@@ -102,7 +111,7 @@ const gamesOpen = ref(false)
 const mobileOpen = ref(false)
 
 // 移动端合并所有导航
-const allNav = computed(() => [...mainNav, ...gamesNav, ...practiceNav])
+const allNav = computed(() => [...mainNav, ...gamesNav, ...adminNav, ...practiceNav])
 
 // 判断当前路由是否匹配导航项，首页精确匹配，其他前缀匹配
 function isActive(path: string) {
@@ -221,6 +230,12 @@ function isActive(path: string) {
 .dropdown-item:hover {
   color: var(--color-heading);
   background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: 4px 8px;
+  background: var(--color-border-dark);
 }
 
 .dropdown-fade-enter-active,

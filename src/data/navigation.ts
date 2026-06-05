@@ -23,3 +23,5 @@ export const gamesNav: NavItem[] = [
   { path: '/games', label: '🎮 游戏大厅' },
   { path: '/games/guess-number', label: '🔢 猜数字' },
 ]
+
+export { adminNav } from './admin-navigation'

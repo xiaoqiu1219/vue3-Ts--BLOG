@@ -69,6 +69,12 @@ const router = createRouter({
       name: 'practice-modal',
       component: () => import('../views/ModalDemo.vue'),
     },
+    // ===== 后台管理 =====
+    {
+      path: '/admin/manage',
+      name: 'admin-manage',
+      component: () => import('../views/admin/AdminManage.vue'),
+    },
   ],
 })
 
