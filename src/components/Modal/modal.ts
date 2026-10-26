@@ -1,35 +1,32 @@
 import { createApp, h, ref } from 'vue'
 import Modal from './Modal.vue'
+import { i18n } from '@/i18n'
 import type { ModalOptions, ModalConfig, ModalI18n, ModalContentType } from './types'
 
 let modalId = 0
 
-// 全局配置
+// 全局配置（按钮文字不设默认值，未配置时由 Modal.vue 回退到 vue-i18n）
 const globalConfig = ref<ModalConfig>({
-  confirmText: '确定',
-  cancelText: '取消',
   closeOnClickModal: true,
   showClose: true,
   width: '480px',
   zIndex: 2000
 })
 
-// 国际化配置
-const globalI18n = ref<ModalI18n>({
-  confirm: '确定',
-  cancel: '取消'
-})
+// 旧版国际化配置（modal.setI18n）：优先级高于 globalConfig，未配置时继续回退到 vue-i18n
+const globalI18n = ref<ModalI18n>({})
 
 // 合并配置
 function mergeOptions(options: ModalOptions): ModalOptions {
-  const i18n = globalI18n.value
+  // 注意不要命名为 i18n，会遮蔽顶部导入的全局 i18n 单例
+  const i18nConfig = globalI18n.value
   const config = globalConfig.value
 
   return {
     title: options.title,
     content: options.content,
-    confirmText: options.confirmText ?? i18n.confirm ?? config.confirmText,
-    cancelText: options.cancelText ?? i18n.cancel ?? config.cancelText,
+    confirmText: options.confirmText ?? i18nConfig.confirm ?? config.confirmText,
+    cancelText: options.cancelText ?? i18nConfig.cancel ?? config.cancelText,
     showConfirm: options.showConfirm ?? true,
     showCancel: options.showCancel ?? true,
     closeOnClickModal: options.closeOnClickModal ?? config.closeOnClickModal,
@@ -151,7 +148,7 @@ export const modal = {
    * @param content 内容
    * @param title 标题
    */
-  confirm(content: ModalContentType, title = '确认'): Promise<boolean> {
+  confirm(content: ModalContentType, title = i18n.global.t('common.confirmAction')): Promise<boolean> {
     return this.show({
       title,
       content,
@@ -165,7 +162,7 @@ export const modal = {
    * @param content 内容
    * @param title 标题
    */
-  info(content: ModalContentType, title = '提示'): Promise<boolean> {
+  info(content: ModalContentType, title = i18n.global.t('common.tip')): Promise<boolean> {
     return this.show({
       title,
       content,
@@ -179,7 +176,7 @@ export const modal = {
    * @param content 内容
    * @param title 标题
    */
-  warning(content: ModalContentType, title = '警告'): Promise<boolean> {
+  warning(content: ModalContentType, title = i18n.global.t('common.warning')): Promise<boolean> {
     return this.show({
       title,
       content,
@@ -194,7 +191,7 @@ export const modal = {
    * @param content 内容
    * @param title 标题
    */
-  error(content: ModalContentType, title = '错误'): Promise<boolean> {
+  error(content: ModalContentType, title = i18n.global.t('common.error')): Promise<boolean> {
     return this.show({
       title,
       content,

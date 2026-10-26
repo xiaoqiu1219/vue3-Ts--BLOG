@@ -25,7 +25,7 @@
       </div>
 
       <!-- 空状态 -->
-      <div v-else-if="data.length === 0" class="vt-empty">暂无数据</div>
+      <div v-else-if="data.length === 0" class="vt-empty">{{ t('table.empty') }}</div>
 
       <!-- 虚拟表格 -->
       <table v-else class="virtual-table">
@@ -72,9 +72,12 @@
 
 <script setup lang="ts" generic="T extends Record<string, unknown>">
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useVirtualizer } from '@tanstack/vue-virtual'
 
-export interface ColumnDef {
+const { t } = useI18n()
+
+interface ColumnDef {
   key: string
   label: string
   width?: string

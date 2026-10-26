@@ -87,7 +87,7 @@ creatNewVue/
     │
     ├── components/             # 组件
     │   ├── common/             # 全局通用组件
-    │   │   ├── AppNavbar.vue   # 全局导航栏：桌面端下拉菜单 + 移动端汉堡按钮 + 暗色/亮色主题切换
+    │   │   ├── AppNavbar.vue   # 全局导航栏：桌面端下拉菜单 + 移动端汉堡按钮 + 暗色/亮色主题切换 + 中英文切换
     │   │   └── AppFooter.vue   # 全局页脚
     │   │
     │   ├── blog/               # 博客专用组件
@@ -120,8 +120,13 @@ creatNewVue/
     │       ├── IconSupport.vue
     │       └── IconTooling.vue
     │
+    ├── i18n/                   # 国际化（vue-i18n）
+    │   ├── index.ts            # 创建全局 i18n 实例（legacy: false），提供 setLocale()/toggleLocale()，localStorage 持久化并同步 <html lang> 与页面标题
+    │   └── locales/            # 语言包（结构完全一致的 key）
+    │       ├── zh-CN.ts        # 中文文案
+    │       └── en-US.ts        # 英文文案
+    │
     ├── composables/            # 组合式函数（Composables）
-    │   ├── useI18n.ts          # 中英文国际化：提供全局翻译表（zh/en 两组 key-value），支持 t() 翻译、toggleLocale() 切换语言、setLocale() 指定语言
     │   ├── useSearch.ts        # 后台搜索逻辑：泛型 formData（v-model 绑定）、search() 快照过滤空值、reset() 恢复初始值
     │   ├── useTable.ts         # 后台表格数据管理：loading 状态、分页（page/pageSize）、错误捕获、refresh() 刷新、fetcher 注入
     │   └── useVirtualScroll.ts # 虚拟滚动封装：基于 @tanstack/vue-virtual 的 useVirtualizer，返回 virtualItems + totalHeight
@@ -202,8 +207,11 @@ api/*.ts (接口层 → Axios → 后端)
 
 ### 国际化
 
-- `useI18n` composable 提供中英文翻译能力，所有 UI 文本以 key-value 形式存储在 `messages` 对象中。
-- 全局 `currentLocale` ref 可被任意组件引用，切换语言后所有使用 `t()` 的地方自动更新。
+- 基于 `vue-i18n`（Composition API 模式，`legacy: false`），语言包位于 `src/i18n/locales/`，中英文 key 结构完全一致。
+- 翻译范围是**界面文案**：导航、按钮、标题、表单、表格、游戏 UI、角色/状态/难度标签等；文章正文、面试长文、时间线经历等内容保持中文。
+- 右上角 `EN / 中` 按钮切换语言，选择持久化在 localStorage 的 `locale` 键，并同步 `<html lang>` 与 `document.title`。
+- 数据文件存 i18n key 或稳定的机器值（如 `role: 'admin'`、`difficulty: 'easy'`），渲染时用 `t()` 翻译；新增文案需同时补充 `zh-CN.ts` 与 `en-US.ts`。
+- 函数式弹窗（`modal.show()`）会创建独立的 Vue 应用，未安装 i18n 插件，因此组件内使用 `i18n.global.t()` 而非 `useI18n()`。
 
 ### 虚拟滚动
 

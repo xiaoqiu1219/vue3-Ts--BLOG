@@ -5,7 +5,7 @@
       <div class="page-header">
         <span class="page-badge">{{ t('about.badge') }}</span>
         <h1 class="page-title">{{ t('about.title') }}</h1>
-        <p class="page-desc" v-html="$t_html('about.desc')"></p>
+        <p class="page-desc" v-html="t('about.desc')"></p>
       </div>
 
       <!-- 演示卡片 -->
@@ -26,8 +26,8 @@
             @confirm="handleConfirm"
             @cancel="handleCancel"
           >
-            <p>此弹窗通过 <code>v-model</code> 绑定在 <code>&lt;Modal&gt;</code> 标签上控制显隐。</p>
-            <p style="margin-top:8px">支持插槽、属性配置和完整的事件处理。</p>
+            <p v-html="t('about.basic.modal.p1')"></p>
+            <p style="margin-top:8px" v-html="t('about.basic.modal.p2')"></p>
           </Modal>
         </div>
 
@@ -124,12 +124,11 @@
 import { ref } from 'vue'
 import Modal from '@/components/Modal/Modal.vue'
 import { getHello } from '@/api/backend'
-import { useI18n } from '@/composables/useI18n'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
 // Helper to render HTML in translated strings
-const $t_html = (key: string) => t(key)
 
 const basicVisible = ref(false)
 const customVisible = ref(false)

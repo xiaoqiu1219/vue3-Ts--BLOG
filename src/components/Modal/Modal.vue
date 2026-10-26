@@ -46,7 +46,7 @@
                 v-if="isShowClose"
                 class="modal-close-btn"
                 @click="handleClose"
-                aria-label="关闭"
+                :aria-label="t('common.close')"
               >
                 <!-- SVG 关闭图标 -->
                 <svg viewBox="0 0 24 24" class="modal-close-icon">
@@ -83,7 +83,7 @@
                   class="modal-btn modal-btn-cancel"
                   @click="handleCancel"
                 >
-                  {{ cancelText }}
+                  {{ displayCancelText }}
                 </button>
                 <!-- 确认按钮：根据 showConfirm 配置显示/隐藏 -->
                 <button
@@ -91,7 +91,7 @@
                   class="modal-btn modal-btn-confirm"
                   @click="handleConfirm"
                 >
-                  {{ confirmText }}
+                  {{ displayConfirmText }}
                 </button>
               </slot>
             </div>
@@ -115,9 +115,19 @@
  * - 支持 v-model 双向绑定控制显示/隐藏
  */
 import { computed, ref, useSlots, watch } from 'vue'
+import { i18n } from '@/i18n'
 import type { ModalOptions } from './types'
 
 defineOptions({ name: 'VueModal' })
+
+/**
+ * 直接使用全局 i18n 实例而非 useI18n()：
+ * 函数式调用（modal.show）会为每个弹窗创建独立的 Vue 应用，该应用没有安装 i18n 插件，
+ * useI18n() 会抛 NOT_INSTALLED；而给这个应用 app.use(i18n) 也不行——vue-i18n 安装时会
+ * 包装 app.unmount，弹窗关闭时触发的 i18n.dispose() 会把全站共享的实例销毁。
+ * 全局 composer 的 t() 内部读取 locale ref，在 computed / 模板中依然是响应式的。
+ */
+const { t } = i18n.global
 
 // ==================== Props 定义 ====================
 /**
@@ -152,8 +162,6 @@ const props = withDefaults(
     title: '',
     width: undefined,
     zIndex: undefined,
-    confirmText: '确定',
-    cancelText: '取消',
     showConfirm: true,
     showCancel: true,
     showClose: true,
@@ -217,7 +225,17 @@ const modalZIndex = computed(() => {
 })
 
 /** 计算标题 */
-const modalTitle = computed(() => props.title || props.options?.title || '提示')
+const modalTitle = computed(() => props.title || props.options?.title || t('common.tip'))
+
+/** 确认按钮文字：优先 props，其次 options，最后回退到 i18n 默认值 */
+const displayConfirmText = computed(
+  () => props.confirmText || props.options?.confirmText || t('common.confirm')
+)
+
+/** 取消按钮文字：优先 props，其次 options，最后回退到 i18n 默认值 */
+const displayCancelText = computed(
+  () => props.cancelText || props.options?.cancelText || t('common.cancel')
+)
 
 /** 是否显示确认按钮 */
 const isShowConfirm = computed(() => props.showConfirm && props.options?.showConfirm !== false)

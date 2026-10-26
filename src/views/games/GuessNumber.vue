@@ -1,11 +1,11 @@
 <template>
   <div class="guess-game">
     <div class="game-container">
-      <RouterLink to="/games" class="back-link">← 返回游戏大厅</RouterLink>
+      <RouterLink to="/games" class="back-link">{{ t('guess.back') }}</RouterLink>
 
       <div class="game-card-main">
-        <h1 class="game-title">🔢 猜数字</h1>
-        <p class="game-rules">我心里想了一个 1~100 之间的数字，你有 <strong>{{ maxAttempts }}</strong> 次机会猜中它。</p>
+        <h1 class="game-title">{{ t('guess.title') }}</h1>
+        <p class="game-rules">{{ t('guess.rulesPrefix') }} <strong>{{ maxAttempts }}</strong> {{ t('guess.rulesSuffix') }}</p>
 
         <!-- 游戏进行中 -->
         <template v-if="gameState === 'playing'">
@@ -16,17 +16,17 @@
               type="number"
               min="1"
               max="100"
-              placeholder="输入 1~100"
+              :placeholder="t('guess.placeholder')"
               class="guess-input"
               @keyup.enter="submitGuess"
             />
-            <button class="guess-btn" @click="submitGuess" :disabled="!guess">猜！</button>
+            <button class="guess-btn" @click="submitGuess" :disabled="!guess">{{ t('guess.btn') }}</button>
           </div>
 
-          <div v-if="hint" class="hint-text" :class="hintColor">{{ hint }}</div>
+          <div v-if="hint" class="hint-text" :class="hintColor">{{ t(hint) }}</div>
 
           <div class="attempts-info">
-            已猜 <strong>{{ attempts }}</strong> / {{ maxAttempts }} 次
+            {{ t('guess.attemptsPrefix') }} <strong>{{ attempts }}</strong> / {{ maxAttempts }} {{ t('guess.attemptsSuffix') }}
           </div>
           <div class="history">
             <span v-for="(h, i) in historyList" :key="i" class="history-tag" :class="h.type">
@@ -41,9 +41,9 @@
         <template v-else-if="gameState === 'won'">
           <div class="result-card won">
             <span class="result-emoji">🎉</span>
-            <h2 class="result-title">恭喜你猜中了！</h2>
-            <p class="result-detail">答案就是 <strong>{{ target }}</strong>，你用了 <strong>{{ attempts }}</strong> 次猜中。</p>
-            <button class="restart-btn" @click="startGame">再来一局</button>
+            <h2 class="result-title">{{ t('guess.wonTitle') }}</h2>
+            <p class="result-detail">{{ t('guess.wonDetail', { target, attempts }) }}</p>
+            <button class="restart-btn" @click="startGame">{{ t('guess.again') }}</button>
           </div>
         </template>
 
@@ -51,9 +51,9 @@
         <template v-else-if="gameState === 'lost'">
           <div class="result-card lost">
             <span class="result-emoji">😢</span>
-            <h2 class="result-title">次数用完了</h2>
-            <p class="result-detail">正确答案是 <strong>{{ target }}</strong>，下次加油！</p>
-            <button class="restart-btn" @click="startGame">再来一局</button>
+            <h2 class="result-title">{{ t('guess.lostTitle') }}</h2>
+            <p class="result-detail">{{ t('guess.lostDetail', { target }) }}</p>
+            <button class="restart-btn" @click="startGame">{{ t('guess.again') }}</button>
           </div>
         </template>
       </div>
@@ -64,6 +64,9 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const maxAttempts = 7
 const gameState = ref<'playing' | 'won' | 'lost'>('playing')
@@ -100,11 +103,11 @@ function submitGuess() {
     gameState.value = 'lost'
     hint.value = ''
   } else if (val < target.value) {
-    hint.value = `太小了，往大猜！`
+    hint.value = 'guess.hintLow'
     hintColor.value = 'hint-low'
     historyList.value.push({ value: val, type: 'low' })
   } else {
-    hint.value = `太大了，往小猜！`
+    hint.value = 'guess.hintHigh'
     hintColor.value = 'hint-high'
     historyList.value.push({ value: val, type: 'high' })
   }

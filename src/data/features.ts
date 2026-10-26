@@ -1,4 +1,4 @@
-/** 经历页功能数据 — ExperienceView 数据源 */
+/** 经历页功能数据 — ExperienceView 数据源。标签类字段为 i18n key，内容描述保留中文。 */
 
 export interface FeatureItem {
   id: string
@@ -9,6 +9,7 @@ export interface FeatureItem {
   color: string
 }
 
+// 功能模块详情属于工作内容，保留中文
 export const features: FeatureItem[] = [
   {
     id: 'f01',
@@ -108,19 +109,20 @@ export const features: FeatureItem[] = [
   },
 ]
 
-/** Hero 快捷数据 */
+/** Hero 快捷数据（label 为 i18n key） */
 export interface StatItem {
   num: string
+  /** i18n key */
   label: string
 }
 
 export const heroStats: StatItem[] = [
-  { num: '5+', label: '年经验' },
-  { num: '12', label: '核心功能' },
-  { num: '3', label: '产品线' },
+  { num: '5+', label: 'experience.stats.years' },
+  { num: '12', label: 'experience.stats.features' },
+  { num: '3', label: 'experience.stats.products' },
 ]
 
-/** 技能标签云 */
+/** 技能标签云（技术名词，保留原文） */
 export const heroSkillPills: string[] = [
   'Vue 3',
   'TypeScript',
@@ -133,15 +135,16 @@ export const heroSkillPills: string[] = [
   '实名认证',
 ]
 
-/** 底部技术栈分组 */
+/** 底部技术栈分组（label 为 i18n key，tags 保留原文） */
 export interface TechGroup {
+  /** i18n key */
   label: string
   tags: string[]
 }
 
 export const techGroups: TechGroup[] = [
-  { label: '前端框架', tags: ['Vue 2/3', 'TypeScript', 'UniApp', 'Vite'] },
-  { label: 'UI 框架', tags: ['Element-UI', 'View Design', 'Ant Design Vue'] },
-  { label: '微信生态', tags: ['公众号 JSSDK', '小程序 API', '微信支付', '支付宝支付'] },
-  { label: '工程化 & 其他', tags: ['Git', 'CI/CD', 'ECharts', 'Canvas', 'Node.js'] },
+  { label: 'experience.techGroups.frontend', tags: ['Vue 2/3', 'TypeScript', 'UniApp', 'Vite'] },
+  { label: 'experience.techGroups.ui', tags: ['Element-UI', 'View Design', 'Ant Design Vue'] },
+  { label: 'experience.techGroups.wechat', tags: ['公众号 JSSDK', '小程序 API', '微信支付', '支付宝支付'] },
+  { label: 'experience.techGroups.engineering', tags: ['Git', 'CI/CD', 'ECharts', 'Canvas', 'Node.js'] },
 ]

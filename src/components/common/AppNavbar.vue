@@ -2,8 +2,8 @@
   <header class="blog-navbar">
     <div class="blog-navbar-inner">
       <RouterLink to="/" class="blog-brand">
-        <img src="@/assets/cat.jpg" alt="头像" class="brand-avatar" />
-        <span class="brand-text">KOKO的博客</span>
+        <img src="@/assets/cat.jpg" :alt="t('nav.avatar')" class="brand-avatar" />
+        <span class="brand-text">{{ t('nav.brand') }}</span>
       </RouterLink>
 
       <!-- 桌面端导航 -->
@@ -15,12 +15,12 @@
           class="blog-nav-link"
           :class="{ active: isActive(item.path) }"
         >
-          {{ item.label }}
+          {{ t(item.label) }}
         </RouterLink>
 
         <!-- 小游戏下拉 -->
         <div class="nav-dropdown" @mouseenter="gamesOpen = true" @mouseleave="gamesOpen = false">
-          <span class="blog-nav-link dropdown-trigger" :class="{ active: isActive('/games') }">🎮 小游戏 ▾</span>
+          <span class="blog-nav-link dropdown-trigger" :class="{ active: isActive('/games') }">🎮 {{ t('nav.games') }} ▾</span>
           <Transition name="dropdown-fade">
             <div v-if="gamesOpen" class="dropdown-menu">
               <RouterLink
@@ -29,7 +29,7 @@
                 :to="sub.path"
                 class="dropdown-item"
               >
-                {{ sub.label }}
+                {{ t(sub.label) }}
               </RouterLink>
             </div>
           </Transition>
@@ -37,7 +37,7 @@
 
         <!-- 更多下拉 -->
         <div class="nav-dropdown" @mouseenter="open = true" @mouseleave="open = false">
-          <span class="blog-nav-link dropdown-trigger">更多 ▾</span>
+          <span class="blog-nav-link dropdown-trigger">{{ t('nav.more') }} ▾</span>
           <Transition name="dropdown-fade">
             <div v-if="open" class="dropdown-menu">
               <RouterLink
@@ -46,7 +46,7 @@
                 :to="sub.path"
                 class="dropdown-item"
               >
-                {{ sub.label }}
+                {{ t(sub.label) }}
               </RouterLink>
               <div class="dropdown-divider"></div>
               <RouterLink
@@ -55,7 +55,7 @@
                 :to="sub.path"
                 class="dropdown-item"
               >
-                {{ sub.label }}
+                {{ t(sub.label) }}
               </RouterLink>
             </div>
           </Transition>
@@ -65,15 +65,25 @@
         <button
           class="theme-toggle"
           @click="themeStore.toggle()"
-          :aria-label="themeStore.isDark ? '切换白天模式' : '切换黑夜模式'"
-          :title="themeStore.isDark ? '切换白天模式' : '切换黑夜模式'"
+          :aria-label="themeStore.isDark ? t('nav.themeToLight') : t('nav.themeToDark')"
+          :title="themeStore.isDark ? t('nav.themeToLight') : t('nav.themeToDark')"
         >
           <span class="theme-icon">{{ themeStore.isDark ? '☀️' : '🌙' }}</span>
+        </button>
+
+        <!-- 语言切换 -->
+        <button
+          class="theme-toggle"
+          @click="toggleLocale()"
+          :aria-label="t('nav.toggleLang')"
+          :title="t('nav.toggleLang')"
+        >
+          <span class="lang-text">{{ switchLabel.compact }}</span>
         </button>
       </nav>
 
       <!-- 移动端汉堡按钮 -->
-      <button class="hamburger-btn" @click="mobileOpen = !mobileOpen" aria-label="菜单">
+      <button class="hamburger-btn" @click="mobileOpen = !mobileOpen" :aria-label="t('nav.menu')">
         <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
         <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
         <span class="hamburger-line" :class="{ open: mobileOpen }"></span>
@@ -91,8 +101,12 @@
           :class="{ active: isActive(item.path) }"
           @click="mobileOpen = false"
         >
-          {{ item.label }}
+          {{ t(item.label) }}
         </RouterLink>
+        <!-- 移动端语言切换 -->
+        <button class="mobile-lang-btn" @click="toggleLocale()">
+          {{ switchLabel.full }}
+        </button>
       </nav>
     </Transition>
   </header>
@@ -101,14 +115,22 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useThemeStore } from '@/stores/theme'
+import { toggleLocale } from '@/i18n'
 import { mainNav, practiceNav, gamesNav, adminNav } from '@/data/navigation'
 
 const route = useRoute()
 const themeStore = useThemeStore()
+const { t, locale } = useI18n()
 const open = ref(false)
 const gamesOpen = ref(false)
 const mobileOpen = ref(false)
+
+// 语言切换按钮文案：显示的是「切换目标语言」
+const switchLabel = computed(() =>
+  locale.value === 'zh-CN' ? { compact: 'EN', full: 'English' } : { compact: '中', full: '中文' },
+)
 
 // 移动端合并所有导航
 const allNav = computed(() => [...mainNav, ...gamesNav, ...adminNav, ...practiceNav])
@@ -274,6 +296,35 @@ function isActive(path: string) {
 
 .theme-icon {
   line-height: 1;
+}
+
+/* 语言切换按钮 */
+.lang-text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-heading);
+  line-height: 1;
+}
+
+/* 移动端语言切换按钮 */
+.mobile-lang-btn {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: var(--radius-md);
+  text-align: left;
+  min-height: var(--touch-target-min);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mobile-lang-btn:hover {
+  background: rgba(6, 182, 212, 0.2);
 }
 
 /* 汉堡按钮 */

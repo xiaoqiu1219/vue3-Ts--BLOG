@@ -3,14 +3,21 @@
 import { get } from './request'
 import type { PageResult, PageParams } from '@/composables/useTable'
 
-// ===== 真实 API =====
+// ===== 角色 / 状态机器值 =====
+// 作为 mock 数据、下拉选项、样式的唯一来源；显示文案由 i18n 的 admin.role.* / admin.status.* 提供
+
+export const USER_ROLES = ['admin', 'editor', 'user', 'guest'] as const
+export type UserRole = (typeof USER_ROLES)[number]
+
+export const USER_STATUSES = ['enabled', 'disabled'] as const
+export type UserStatus = (typeof USER_STATUSES)[number]
 
 export interface AdminUser {
   id: number
   name: string
   email: string
-  role: string
-  status: string
+  role: UserRole
+  status: UserStatus
   department: string
   city: string
   createdAt: string
@@ -20,8 +27,8 @@ export interface AdminUser {
 
 // 模拟 10 万条用户数据，用于展示虚拟表格性能
 function generateMockUsers(total: number): AdminUser[] {
-  const roles = ['管理员', '编辑', '普通用户', '访客']
-  const statuses = ['启用', '禁用']
+  const roles = USER_ROLES
+  const statuses = USER_STATUSES
   const departments = [
     '技术部', '产品部', '设计部', '运营部', '市场部', '人事部', '财务部', '法务部',
     '销售部', '客服部', '数据部', '行政部', '研发一部', '研发二部', '测试部',

@@ -3,8 +3,8 @@
     <!-- Hero -->
     <section class="articles-hero">
       <div class="hero-inner">
-        <h1 class="hero-title">文章</h1>
-        <p class="hero-desc">技术思考、实战总结与面试精进</p>
+        <h1 class="hero-title">{{ t('articles.title') }}</h1>
+        <p class="hero-desc">{{ t('articles.desc') }}</p>
       </div>
     </section>
 
@@ -17,7 +17,7 @@
         :class="{ 'tag-active': activeTag === tag }"
         @click="activeTag = tag"
       >
-        {{ tag }}
+        {{ tag === '全部' ? t('articles.all') : tag }}
       </button>
     </section>
 
@@ -33,12 +33,12 @@
               </div>
               <h2 class="article-title">{{ article.title }}</h2>
               <p class="article-excerpt">{{ article.excerpt }}</p>
-              <span class="article-read-more">阅读全文 →</span>
+              <span class="article-read-more">{{ t('articles.readMore') }}</span>
             </div>
           </RouterLink>
         </SectionCard>
       </template>
-      <p v-else class="empty-hint">该标签下暂无文章，看看其他的吧~</p>
+      <p v-else class="empty-hint">{{ t('articles.empty') }}</p>
     </section>
   </div>
 </template>
@@ -46,8 +46,11 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import SectionCard from '@/components/blog/SectionCard.vue'
 import { articles } from './articles-data'
+
+const { t } = useI18n()
 
 // 提取所有标签（去重），"全部" 始终在最前
 const allTags = computed(() => {

@@ -1,24 +1,24 @@
 <template>
   <div class="mole-game">
     <div class="game-wrapper">
-      <RouterLink to="/games" class="back-link">← 返回游戏大厅</RouterLink>
+      <RouterLink to="/games" class="back-link">{{ t('mole.back') }}</RouterLink>
 
       <div class="game-panel">
         <!-- 顶栏：得分 + 计时 + 暂停按钮 -->
         <div class="top-bar">
           <div class="score-board">
-            <span class="score-label">得分</span>
+            <span class="score-label">{{ t('mole.score') }}</span>
             <span class="score-num">{{ score }}</span>
           </div>
           <div class="timer-board" :class="{ 'timer-warn': timeLeft <= 5 && gameState === 'playing' }">
-            <span class="timer-label">时间</span>
+            <span class="timer-label">{{ t('mole.time') }}</span>
             <span class="timer-num">{{ timeLeft }}s</span>
           </div>
           <button
             v-if="gameState === 'playing' || gameState === 'paused'"
             class="pause-btn"
             @click="togglePause"
-            :title="gameState === 'paused' ? '继续' : '暂停'"
+            :title="gameState === 'paused' ? t('mole.continue') : t('common.pause')"
           >
             {{ gameState === 'paused' ? '▶' : '⏸' }}
           </button>
@@ -42,30 +42,30 @@
           <!-- 暂停遮罩 -->
           <div v-if="gameState === 'paused'" class="pause-overlay">
             <span class="pause-emoji">⏸</span>
-            <span class="pause-text">已暂停</span>
+            <span class="pause-text">{{ t('mole.paused') }}</span>
           </div>
         </div>
 
         <!-- 空闲状态 -->
         <div v-if="gameState === 'idle'" class="game-idle">
           <span class="idle-emoji">🔨</span>
-          <h2 class="idle-title">打地鼠</h2>
-          <p class="idle-desc">地鼠随机冒出，眼疾手快锤爆它们！</p>
-          <button class="start-btn" @click="startGame">开始游戏</button>
+          <h2 class="idle-title">{{ t('mole.title') }}</h2>
+          <p class="idle-desc">{{ t('mole.desc') }}</p>
+          <button class="start-btn" @click="startGame">{{ t('mole.start') }}</button>
         </div>
 
         <!-- 游戏结束 -->
         <div v-if="gameState === 'over'" class="game-result">
           <span class="result-emoji">🎉</span>
-          <h2 class="result-title">时间到！</h2>
+          <h2 class="result-title">{{ t('mole.timeUp') }}</h2>
           <div class="result-score-card">
-            <span class="result-score-label">最终得分</span>
+            <span class="result-score-label">{{ t('mole.finalScore') }}</span>
             <span class="result-score-num">{{ score }}</span>
-            <span class="result-score-unit">只地鼠</span>
+            <span class="result-score-unit">{{ t('mole.unit') }}</span>
           </div>
           <div class="result-actions">
-            <button class="restart-btn" @click="startGame">再来一局</button>
-            <RouterLink to="/games" class="back-hub-btn">返回大厅</RouterLink>
+            <button class="restart-btn" @click="startGame">{{ t('mole.again') }}</button>
+            <RouterLink to="/games" class="back-hub-btn">{{ t('mole.backHub') }}</RouterLink>
           </div>
         </div>
       </div>
@@ -76,6 +76,9 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const GAME_DURATION = 20
 const MOLE_INTERVAL_MIN = 600

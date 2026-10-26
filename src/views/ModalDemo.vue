@@ -5,12 +5,12 @@
       <div class="page-header">
         <span class="page-badge">{{ t('modal.badge') }}</span>
         <h1 class="page-title">{{ t('modal.title') }}</h1>
-        <p class="page-desc" v-html="$t_html('modal.desc')"></p>
+        <p class="page-desc" v-html="t('modal.desc')"></p>
       </div>
 
       <!-- 基础类型 -->
       <section class="demo-section">
-        <h2 class="section-title">{{ t('modal.basic') }}</h2>
+        <h2 class="section-title">{{ t('modal.sections.basic') }}</h2>
         <div class="btn-group">
           <button class="btn btn-primary" @click="showBasicModal">{{ t('modal.basic.btn') }}</button>
           <button class="btn btn-success" @click="showConfirmModal">{{ t('modal.basic.confirm') }}</button>
@@ -20,7 +20,7 @@
 
       <!-- 提示类型 -->
       <section class="demo-section">
-        <h2 class="section-title">{{ t('modal.alert') }}</h2>
+        <h2 class="section-title">{{ t('modal.sections.alert') }}</h2>
         <div class="btn-group">
           <button class="btn btn-warning" @click="showWarningModal">{{ t('modal.alert.warning') }}</button>
           <button class="btn btn-error" @click="showErrorModal">{{ t('modal.alert.error') }}</button>
@@ -29,7 +29,7 @@
 
       <!-- 内容类型 -->
       <section class="demo-section">
-        <h2 class="section-title">{{ t('modal.content') }}</h2>
+        <h2 class="section-title">{{ t('modal.sections.content') }}</h2>
         <div class="btn-group">
           <button class="btn btn-secondary" @click="showHtmlModal">{{ t('modal.content.html') }}</button>
           <button class="btn btn-secondary" @click="showVNodeModal">{{ t('modal.content.vnode') }}</button>
@@ -38,7 +38,7 @@
 
       <!-- 高级用法 -->
       <section class="demo-section">
-        <h2 class="section-title">{{ t('modal.advanced') }}</h2>
+        <h2 class="section-title">{{ t('modal.sections.advanced') }}</h2>
         <div class="btn-group">
           <button class="btn btn-secondary" @click="showAsyncModal">{{ t('modal.advanced.async') }}</button>
           <button class="btn btn-secondary" @click="showCustomModal">{{ t('modal.advanced.custom') }}</button>
@@ -83,10 +83,9 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { modal } from '@/components/Modal'
-import { useI18n } from '@/composables/useI18n'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const $t_html = (key: string) => t(key)
 
 // 显示基础弹窗，支持确认/取消回调并打印结果
 const showBasicModal = async () => {

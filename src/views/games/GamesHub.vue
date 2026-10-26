@@ -3,8 +3,8 @@
     <!-- Hero -->
     <section class="games-hero">
       <div class="hero-inner">
-        <h1 class="hero-title">🎮 小游戏</h1>
-        <p class="hero-desc">摸鱼一时爽，一直摸鱼一直爽</p>
+        <h1 class="hero-title">{{ t('games.title') }}</h1>
+        <p class="hero-desc">{{ t('games.desc') }}</p>
       </div>
     </section>
 
@@ -22,22 +22,25 @@
         <span class="game-icon">{{ game.icon }}</span>
         <div class="game-info">
           <div class="game-head">
-            <h3 class="game-name">{{ game.name }}</h3>
-            <span class="game-difficulty" :class="'diff-' + game.difficulty">{{ game.difficulty }}</span>
+            <h3 class="game-name">{{ t(game.name) }}</h3>
+            <span class="game-difficulty" :class="'diff-' + game.difficulty">{{ t('games.diff.' + game.difficulty) }}</span>
           </div>
-          <p class="game-desc">{{ game.desc }}</p>
+          <p class="game-desc">{{ t(game.desc) }}</p>
         </div>
-        <span v-if="!game.online" class="game-badge">即将上线</span>
+        <span v-if="!game.online" class="game-badge">{{ t('games.coming') }}</span>
       </RouterLink>
 
-      <p v-if="games.length === 0" class="empty-hint">游戏正在开发中，敬请期待~</p>
+      <p v-if="games.length === 0" class="empty-hint">{{ t('games.empty') }}</p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { games } from '@/data/games'
+
+const { t } = useI18n()
 </script>
 
 <style scoped>
@@ -176,17 +179,17 @@ import { games } from '@/data/games'
   white-space: nowrap;
 }
 
-.diff-简单 {
+.diff-easy {
   color: #10b981;
   background: rgba(16, 185, 129, 0.12);
 }
 
-.diff-中等 {
+.diff-medium {
   color: #f59e0b;
   background: rgba(245, 158, 11, 0.12);
 }
 
-.diff-困难 {
+.diff-hard {
   color: #ef4444;
   background: rgba(239, 68, 68, 0.12);
 }

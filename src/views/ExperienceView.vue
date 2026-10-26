@@ -3,17 +3,14 @@
     <!-- ====== Hero 区：正常纵向滚动，在上方提供丰富内容 ====== -->
     <section class="exp-hero">
       <div class="hero-inner">
-        <h1 class="hero-title">功能经历</h1>
-        <p class="hero-desc">
-          5 年前端开发经验，深度参与微信生态、支付体系、企业级管理系统等多领域项目。
-          以下展示的是独立负责或主导交付的核心功能模块。
-        </p>
+        <h1 class="hero-title">{{ t('experience.title') }}</h1>
+        <p class="hero-desc">{{ t('experience.desc') }}</p>
 
         <!-- 快捷数据 -->
         <div class="hero-stats">
           <div v-for="s in heroStats" :key="s.label" class="stat-item">
             <span class="stat-num">{{ s.num }}</span>
-            <span class="stat-label">{{ s.label }}</span>
+            <span class="stat-label">{{ t(s.label) }}</span>
           </div>
         </div>
 
@@ -24,7 +21,7 @@
 
         <!-- 向下滚动引导 -->
         <div class="hero-scroll-hint">
-          <span class="scroll-text">向下滚动浏览功能模块</span>
+          <span class="scroll-text">{{ t('experience.scrollHint') }}</span>
           <span class="scroll-arrow"></span>
         </div>
       </div>
@@ -37,8 +34,8 @@
         <div class="exp-row" ref="expRow">
           <!-- 左侧引导 -->
           <div class="exp-intro">
-            <h2 class="intro-label">核心功能</h2>
-            <p class="intro-hint">← 横向滑动浏览 →</p>
+            <h2 class="intro-label">{{ t('experience.coreModules') }}</h2>
+            <p class="intro-hint">{{ t('experience.swipeHint') }}</p>
             <span class="intro-arrow">→</span>
           </div>
           <div
@@ -73,16 +70,13 @@
         <div class="footer-divider">
           <span class="divider-icon">◆</span>
         </div>
-        <h2 class="footer-title">技术栈总览</h2>
-        <p class="footer-desc">
-          涵盖 Vue 生态、微信生态、支付体系、数据可视化、工程化建设等多个领域，
-          具备从 0 到 1 独立交付复杂业务模块的能力。
-        </p>
+        <h2 class="footer-title">{{ t('experience.techTitle') }}</h2>
+        <p class="footer-desc">{{ t('experience.techDesc') }}</p>
 
         <!-- 技术栈分组 -->
         <div class="footer-groups">
           <div v-for="group in techGroups" :key="group.label" class="footer-group">
-            <h3 class="group-label">{{ group.label }}</h3>
+            <h3 class="group-label">{{ t(group.label) }}</h3>
             <div class="group-tags">
               <span v-for="tag in group.tags" :key="tag" class="g-tag">{{ tag }}</span>
             </div>
@@ -91,8 +85,8 @@
 
         <!-- 底部链接 -->
         <div class="footer-links">
-          <RouterLink to="/timeline" class="footer-link">查看时间线 →</RouterLink>
-          <RouterLink to="/articles" class="footer-link">浏览文章 →</RouterLink>
+          <RouterLink to="/timeline" class="footer-link">{{ t('experience.viewTimeline') }}</RouterLink>
+          <RouterLink to="/articles" class="footer-link">{{ t('experience.viewArticles') }}</RouterLink>
         </div>
       </div>
     </section>
@@ -100,13 +94,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { features, heroSkillPills, techGroups, heroStats } from '@/data/features'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const { t, locale } = useI18n()
 
 // ==================== GSAP 横向滚动 ====================
 const horizontalSection = ref<HTMLElement | null>(null)
@@ -179,6 +176,12 @@ onMounted(async () => {
     )
   })
 
+  ScrollTrigger.refresh()
+})
+
+// 切换语言后卡片文字宽度会变，重新计算 pin 距离与横向滚动终点
+watch(locale, async () => {
+  await nextTick()
   ScrollTrigger.refresh()
 })
 

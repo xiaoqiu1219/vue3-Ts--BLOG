@@ -1,27 +1,27 @@
 <template>
   <div class="admin-pagination">
     <!-- 左侧：总条数 -->
-    <span class="page-total">共 {{ total }} 条</span>
+    <span class="page-total">{{ t('pagination.total', { total }) }}</span>
 
     <!-- 中间：页码 -->
     <div class="page-numbers">
-      <button class="page-btn" :disabled="currentPage === 1" @click="goTo(1)" aria-label="首页">«</button>
-      <button class="page-btn" :disabled="currentPage === 1" @click="goTo(currentPage - 1)" aria-label="上一页">‹</button>
+      <button class="page-btn" :disabled="currentPage === 1" @click="goTo(1)" :aria-label="t('pagination.first')">«</button>
+      <button class="page-btn" :disabled="currentPage === 1" @click="goTo(currentPage - 1)" :aria-label="t('pagination.prev')">‹</button>
 
       <template v-for="p in displayedPages" :key="p">
         <span v-if="p === '...'" class="page-ellipsis">...</span>
         <button v-else class="page-btn" :class="{ active: p === currentPage }" @click="goTo(p as number)">{{ p }}</button>
       </template>
 
-      <button class="page-btn" :disabled="currentPage >= totalPages" @click="goTo(currentPage + 1)" aria-label="下一页">›</button>
-      <button class="page-btn" :disabled="currentPage >= totalPages" @click="goTo(totalPages)" aria-label="末页">»</button>
+      <button class="page-btn" :disabled="currentPage >= totalPages" @click="goTo(currentPage + 1)" :aria-label="t('pagination.next')">›</button>
+      <button class="page-btn" :disabled="currentPage >= totalPages" @click="goTo(totalPages)" :aria-label="t('pagination.last')">»</button>
     </div>
 
     <!-- 右侧：每页条数选择 -->
     <div class="page-size-selector">
-      <span class="page-size-label">{{ currentPage }}/{{ totalPages }} 页</span>
+      <span class="page-size-label">{{ t('pagination.page', { current: currentPage, total: totalPages }) }}</span>
       <select class="page-size-select" :value="pageSize" @change="onSizeChange">
-        <option v-for="s in pageSizes" :key="s" :value="s">{{ s }} 条/页</option>
+        <option v-for="s in pageSizes" :key="s" :value="s">{{ t('pagination.perPage', { n: s }) }}</option>
       </select>
     </div>
   </div>
@@ -29,6 +29,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = withDefaults(defineProps<{
   total: number

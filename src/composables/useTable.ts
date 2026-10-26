@@ -26,10 +26,11 @@ export function useTable<T>(fetcher: (params: PageParams) => Promise<PageResult<
     loading.value = true
     error.value = null
     try {
+      // 分页以 composable 内部状态为准，外部参数只提供搜索条件
       const result = await fetcher({
+        ...params,
         page: page.value,
         pageSize: pageSize.value,
-        ...params,
       })
       data.value = result.data
       total.value = result.total

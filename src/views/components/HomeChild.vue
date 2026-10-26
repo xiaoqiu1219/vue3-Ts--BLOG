@@ -1,17 +1,17 @@
 <template>
   <div>
-    子组件
-    <p>姓名：{{ userName }}，号码：{{ userNumber }}</p>
+    {{ t('home.child.title') }}
+    <p>{{ t('home.child.info', { name: userName, number: userNumber }) }}</p>
     <input type="text" v-model="userName" />
     <input type="number" name="phone" v-model="userNumber" />
-    <button @click="handleChildClick">子组件点击按钮</button>
-    <button @click="handleEdit">子组件编辑</button>
+    <button @click="handleChildClick">{{ t('home.child.clickBtn') }}</button>
+    <button @click="handleEdit">{{ t('home.child.editBtn') }}</button>
     <hr />
-    <p>父组件传来的值</p>
+    <p>{{ t('home.child.fromParent') }}</p>
     <input type="text" v-model="localFatherInfo.name" />
     <input type="number" v-model="localFatherInfo.number" />
     <!-- 如果直接使用fatherInfo会爆红，因为不允许子组件修改父组件传输的数据 -->
-    <button @click="handleFatherData">查看父组件传值</button>
+    <button @click="handleFatherData">{{ t('home.child.viewParent') }}</button>
   </div>
 </template>
 <script lang="ts">
@@ -21,7 +21,11 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { FatherData } from '@/views/types/homeChild.ts'
+
+const { t } = useI18n()
+
 // 接收父组件值
 // 默认接收，参数会爆红
 // defineProps<{ fatherInfo: FatherData }>()

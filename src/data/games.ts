@@ -1,14 +1,16 @@
-/** 小游戏配置 — GamesHub + 导航 数据源 */
+/** 小游戏配置 — GamesHub 数据源。name/desc 为 i18n key，difficulty 为机器值。 */
 
 export interface GameItem {
   id: string
+  /** i18n key */
   name: string
+  /** i18n key */
   desc: string
   icon: string
   path: string
   color: string
-  /** 难度标签 */
-  difficulty: '简单' | '中等' | '困难'
+  /** 难度机器值，渲染时用 t('games.diff.<value>') 翻译 */
+  difficulty: 'easy' | 'medium' | 'hard'
   /** 是否已上线 */
   online: boolean
 }
@@ -16,28 +18,23 @@ export interface GameItem {
 export const games: GameItem[] = [
   {
     id: 'whack-mole',
-    name: '打地鼠',
-    desc: '地鼠随机冒出，眼疾手快锤爆它们！20 秒倒计时挑战最高分',
+    name: 'games.whackMole',
+    desc: 'games.whackMoleDesc',
     icon: '🔨',
     path: '/games/whack-mole',
     color: '#f59e0b',
-    difficulty: '简单',
+    difficulty: 'easy',
     online: true,
   },
   {
     id: 'guess-number',
-    name: '猜数字',
-    desc: '系统随机生成一个数字，在有限次数内猜对它',
+    name: 'games.guessNumber',
+    desc: 'games.guessNumberDesc',
     icon: '🔢',
     path: '/games/guess-number',
     color: '#06b6d4',
-    difficulty: '简单',
+    difficulty: 'easy',
     online: true,
   },
   // 后续新增游戏在此追加
 ]
-
-/** 导航栏「小游戏」下拉项 */
-export const gamesNav = games
-  .filter(g => g.online)
-  .map(g => ({ path: g.path, label: `${g.icon} ${g.name}` }))

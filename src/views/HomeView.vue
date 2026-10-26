@@ -101,7 +101,7 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import HomeChild from './components/HomeChild.vue'
-import { useI18n } from '@/composables/useI18n'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 

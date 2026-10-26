@@ -3,7 +3,7 @@
     <!-- 触发器：显示当前选中值或 placeholder -->
     <div class="vd-trigger" @click="toggle" tabindex="0" @keydown="onTriggerKeydown">
       <span class="vd-trigger-text" :class="{ placeholder: !selectedLabel }">
-        {{ selectedLabel || placeholder }}
+        {{ selectedLabel || placeholder || t('dropdown.placeholder') }}
       </span>
       <span class="vd-arrow" :class="{ open: open }">▾</span>
     </div>
@@ -18,7 +18,7 @@
             v-model="filterText"
             type="text"
             class="vd-search-input"
-            placeholder="输入关键词筛选..."
+            :placeholder="t('dropdown.filter')"
             @keydown="onSearchKeydown"
           />
         </div>
@@ -52,7 +52,7 @@
         </div>
 
         <!-- 无匹配项 -->
-        <div v-else class="vd-empty">无匹配选项</div>
+        <div v-else class="vd-empty">{{ t('dropdown.empty') }}</div>
       </div>
     </Transition>
   </div>
@@ -60,7 +60,10 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useVirtualizer } from '@tanstack/vue-virtual'
+
+const { t } = useI18n()
 
 export interface SelectOption {
   label: string
@@ -74,7 +77,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   filterable?: boolean
 }>(), {
-  placeholder: '请选择',
+  placeholder: '',
   disabled: false,
   filterable: true,
 })

@@ -2,8 +2,8 @@
   <div class="timeline-page">
     <!-- Hero 标题区 -->
     <section class="timeline-hero">
-      <h1 class="hero-title">时间线</h1>
-      <p class="hero-subtitle">记录成长轨迹，每一步都算数</p>
+      <h1 class="hero-title">{{ t('timeline.title') }}</h1>
+      <p class="hero-subtitle">{{ t('timeline.subtitle') }}</p>
       <div class="hero-scroll-hint">
         <span class="scroll-arrow"></span>
       </div>
@@ -53,7 +53,7 @@
 
       <!-- 空状态占位 -->
       <div v-if="stageOne.length === 0" class="empty-stage">
-        <p>暂无此阶段的经历记录</p>
+        <p>{{ t('timeline.empty') }}</p>
       </div>
 
       <!-- 阶段二：2022 — 2026 -->
@@ -98,13 +98,13 @@
 
       <!-- 空状态占位 -->
       <div v-if="stageTwo.length === 0" class="empty-stage">
-        <p>暂无此阶段的经历记录</p>
+        <p>{{ t('timeline.empty') }}</p>
       </div>
 
       <!-- 底部终点标记 -->
       <div class="timeline-end">
         <div class="end-dot"></div>
-        <span class="end-label">未完待续...</span>
+        <span class="end-label">{{ t('timeline.end') }}</span>
       </div>
     </div>
   </div>
@@ -112,11 +112,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { stageOne, stageTwo } from '@/data/timeline'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const { t } = useI18n()
 
 // ==================== GSAP ScrollTrigger 动画 ====================
 

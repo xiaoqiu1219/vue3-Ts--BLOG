@@ -4,14 +4,14 @@
     <section class="article-hero">
       <div class="hero-inner">
         <div class="hero-breadcrumb">
-          <RouterLink to="/articles" class="breadcrumb-link">← 返回文章列表</RouterLink>
+          <RouterLink to="/articles" class="breadcrumb-link">{{ t('interview.back') }}</RouterLink>
         </div>
         <h1 class="hero-title">高级前端工程师面试精准答案</h1>
         <p class="hero-desc">涵盖 JavaScript 核心、Vue 深度、TypeScript、工程化、性能优化、安全、UniApp 跨端、系统设计与软技能等 11 个模块，共 24 道高频面试题，附详细解答与项目实战代码。</p>
         <div class="hero-meta">
           <span class="meta-date">2026-06-04</span>
           <span class="meta-divider">·</span>
-          <span class="meta-reading">阅读约 45 分钟</span>
+          <span class="meta-reading">{{ t('interview.reading') }}</span>
           <span class="meta-divider">·</span>
           <span class="meta-tag">面试</span>
         </div>
@@ -23,7 +23,7 @@
       <!-- 侧边目录（桌面端） -->
       <aside class="article-toc-desktop">
         <nav class="toc-nav">
-          <h3 class="toc-title">目录</h3>
+          <h3 class="toc-title">{{ t('interview.toc') }}</h3>
           <ul class="toc-list">
             <li v-for="section in sections" :key="section.id" class="toc-item">
               <a
@@ -40,7 +40,7 @@
       <!-- 移动端目录折叠 -->
       <details class="article-toc-mobile">
         <summary class="toc-mobile-summary">
-          <span>📑 目录</span>
+          <span>📑 {{ t('interview.toc') }}</span>
           <span class="toc-mobile-arrow">▼</span>
         </summary>
         <nav class="toc-mobile-nav">
@@ -73,7 +73,7 @@
 
         <!-- 底部导航 -->
         <div class="article-footer-nav">
-          <RouterLink to="/articles" class="footer-back-link">← 返回文章列表</RouterLink>
+          <RouterLink to="/articles" class="footer-back-link">{{ t('interview.back') }}</RouterLink>
         </div>
       </div>
     </div>
@@ -83,8 +83,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { articleSections } from './interview-content'
 
+const { t } = useI18n()
 const sections = articleSections
 const activeSection = ref<string>('')
 // 缓存章节 DOM 元素，避免滚动时重复查询

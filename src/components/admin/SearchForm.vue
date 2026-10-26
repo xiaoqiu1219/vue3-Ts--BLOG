@@ -9,16 +9,20 @@
     <div class="sf-actions">
       <button class="sf-btn sf-btn-search" :disabled="searching" @click="$emit('search')">
         <span v-if="searching" class="sf-spinner"></span>
-        {{ searching ? '搜索中...' : '搜索' }}
+        {{ searching ? t('search.searching') : t('search.search') }}
       </button>
       <button class="sf-btn sf-btn-reset" :disabled="searching" @click="$emit('reset')">
-        重置
+        {{ t('search.reset') }}
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 defineProps<{
   searching?: boolean
 }>()

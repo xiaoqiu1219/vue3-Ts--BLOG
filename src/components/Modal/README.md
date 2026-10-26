@@ -132,7 +132,7 @@ modal.config({
 
 ### modal.setI18n(i18n)
 
-设置国际化文本。
+设置按钮默认文案（可选）。不配置时自动回退到全局 vue-i18n 的 `common.confirm` / `common.cancel`，随站点中英文切换。
 
 ```typescript
 modal.setI18n({
@@ -145,10 +145,10 @@ modal.setI18n({
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| title | `string` | `'提示'` | 弹窗标题 |
+| title | `string` | i18n `common.tip` | 弹窗标题 |
 | content | `string \| VNode` | - | 弹窗内容，支持字符串或 VNode |
-| confirmText | `string` | `'确定'` | 确认按钮文字 |
-| cancelText | `string` | `'取消'` | 取消按钮文字 |
+| confirmText | `string` | i18n `common.confirm` | 确认按钮文字 |
+| cancelText | `string` | i18n `common.cancel` | 取消按钮文字 |
 | showConfirm | `boolean` | `true` | 是否显示确认按钮 |
 | showCancel | `boolean` | `true` | 是否显示取消按钮 |
 | closeOnClickModal | `boolean` | `true` | 点击遮罩层是否关闭 |

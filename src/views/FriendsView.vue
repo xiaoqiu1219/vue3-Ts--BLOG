@@ -1,9 +1,15 @@
 <template>
   <div class="placeholder-page">
-    <h1>友链</h1>
-    <p>即将上线，敬请期待...</p>
+    <h1>{{ t('friends.title') }}</h1>
+    <p>{{ t('friends.coming') }}</p>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
 
 <style scoped>
 .placeholder-page {

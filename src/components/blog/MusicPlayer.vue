@@ -74,7 +74,7 @@
         <span class="btn-icon" v-else>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
         </span>
-        <span class="btn-text">{{ store.isPlaying ? '暂停' : '播放' }}</span>
+        <span class="btn-text">{{ store.isPlaying ? t('common.pause') : t('common.play') }}</span>
       </button>
     </div>
   </ScrollReveal>
@@ -82,8 +82,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import ScrollReveal from './ScrollReveal.vue'
 import { useMusicStore } from '@/stores/music'
+
+const { t } = useI18n()
 
 const WINDOW_HEIGHT = 280
 const store = useMusicStore()

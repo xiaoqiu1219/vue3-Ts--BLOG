@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import ScrollReveal from './ScrollReveal.vue'
 
 const props = withDefaults(defineProps<{ text?: string; speed?: number }>(), {
@@ -22,9 +22,12 @@ const displayedText = ref('')
 const done = ref(false)
 let timer: ReturnType<typeof setInterval> | null = null
 
-onMounted(() => {
+// 重新开始逐字打印（切换语言时文本会变，需要重播）
+function startTyping() {
+  if (timer) clearInterval(timer)
+  displayedText.value = ''
+  done.value = false
   let i = 0
-  // 定时逐字打印文本，完成后显示闪烁光标
   timer = setInterval(() => {
     if (i < props.text.length) {
       displayedText.value += props.text[i]
@@ -34,7 +37,11 @@ onMounted(() => {
       if (timer) clearInterval(timer)
     }
   }, props.speed)
-})
+}
+
+onMounted(startTyping)
+
+watch(() => props.text, startTyping)
 
 onUnmounted(() => {
   if (timer) clearInterval(timer)

@@ -39,7 +39,7 @@
         </div>
 
         <!-- 播放/暂停 -->
-        <button class="mini-btn" @click.stop="store.toggle()" :title="store.isPlaying ? '暂停' : '播放'">
+        <button class="mini-btn" @click.stop="store.toggle()" :title="store.isPlaying ? t('common.pause') : t('common.play')">
           <svg v-if="!store.isPlaying" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
             <path d="M3 2v8l6-4z"/>
           </svg>
@@ -55,8 +55,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { useMusicStore } from '@/stores/music'
+
+const { t } = useI18n()
 
 const route = useRoute()
 const store = useMusicStore()

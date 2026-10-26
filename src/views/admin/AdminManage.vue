@@ -2,7 +2,7 @@
   <div class="admin-page">
     <div class="admin-container">
       <!-- 页面标题 -->
-      <h2 class="admin-title">后台管理</h2>
+      <h2 class="admin-title">{{ t('admin.title') }}</h2>
 
       <!-- 搜索区 -->
       <SearchForm
@@ -14,7 +14,7 @@
         <input
           v-model="formData.search"
           type="text"
-          placeholder="请输入用户名/邮箱/部门"
+          :placeholder="t('admin.searchPlaceholder')"
           style="width: 240px"
           @keyup.enter="handleSearch"
         />
@@ -23,7 +23,7 @@
         <VirtualDropdown
           v-model="formData.role"
           :options="roleOptions"
-          placeholder="选择角色"
+          :placeholder="t('admin.rolePlaceholder')"
           style="width: 160px"
         />
 
@@ -31,14 +31,14 @@
         <VirtualDropdown
           v-model="formData.status"
           :options="statusOptions"
-          placeholder="选择状态"
+          :placeholder="t('admin.statusPlaceholder')"
           style="width: 120px"
         />
 
         <!-- 日期范围 -->
-        <input v-model="formData.dateStart" type="date" title="起始日期" />
+        <input v-model="formData.dateStart" type="date" :title="t('admin.dateStart')" />
         <span style="color: #909399; line-height: 36px">—</span>
-        <input v-model="formData.dateEnd" type="date" title="结束日期" />
+        <input v-model="formData.dateEnd" type="date" :title="t('admin.dateEnd')" />
       </SearchForm>
 
       <!-- 表格区 -->
@@ -49,19 +49,7 @@
         :row-height="48"
         :max-height="500"
       >
-        <!-- 表头插槽 -->
-        <template #table-header>
-          <th style="width: 80px">ID</th>
-          <th style="width: 140px">用户名</th>
-          <th style="width: 200px">邮箱</th>
-          <th style="width: 100px">角色</th>
-          <th style="width: 80px">状态</th>
-          <th style="width: 120px">部门</th>
-          <th style="width: 100px">城市</th>
-          <th style="width: 140px">创建日期</th>
-        </template>
-
-        <!-- 行渲染插槽 -->
+        <!-- 行渲染插槽（表头由 VirtualTable 根据 columns.label 自动渲染） -->
         <template #table-row="{ row }">
           <td style="width: 80px">{{ row.id }}</td>
           <td style="width: 140px">{{ row.name }}</td>
@@ -69,17 +57,17 @@
           <td style="width: 100px">
             <span
               class="role-tag"
-              :class="{ 'role-admin': row.role === '管理员' }"
+              :class="{ 'role-admin': row.role === 'admin' }"
             >
-              {{ row.role }}
+              {{ roleLabels[row.role] ?? row.role }}
             </span>
           </td>
           <td style="width: 80px">
             <span
               class="status-dot"
-              :class="row.status === '启用' ? 'status-on' : 'status-off'"
+              :class="row.status === 'enabled' ? 'status-on' : 'status-off'"
             ></span>
-            {{ row.status }}
+            {{ statusLabels[row.status] ?? row.status }}
           </td>
           <td style="width: 120px">{{ row.department }}</td>
           <td style="width: 100px">{{ row.city }}</td>
@@ -100,52 +88,57 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue'
+import { watch, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useSearch } from '@/composables/useSearch'
 import { useTable } from '@/composables/useTable'
 import SearchForm from '@/components/admin/SearchForm.vue'
 import VirtualDropdown from '@/components/admin/VirtualDropdown.vue'
 import VirtualTable from '@/components/admin/VirtualTable.vue'
 import Pagination from '@/components/admin/Pagination.vue'
-import { mockFetchUsers, fetchUsers } from '@/api/admin'
+import {
+  mockFetchUsers,
+  fetchUsers,
+  USER_ROLES,
+  USER_STATUSES,
+  type AdminUser,
+} from '@/api/admin'
 import type { PageResult, PageParams } from '@/composables/useTable'
 
-// ===== 行数据类型 =====
-interface UserRow {
-  id: number
-  name: string
-  email: string
-  role: string
-  status: string
-  department: string
-  city: string
-  createdAt: string
-}
+const { t } = useI18n()
 
 // ===== 表格列定义 =====
-const tableColumns = [
-  { key: 'id', label: 'ID', width: '80px' },
-  { key: 'name', label: '用户名', width: '140px' },
-  { key: 'email', label: '邮箱', width: '200px' },
-  { key: 'role', label: '角色', width: '100px' },
-  { key: 'status', label: '状态', width: '80px' },
-  { key: 'department', label: '部门', width: '120px' },
-  { key: 'city', label: '城市', width: '100px' },
-  { key: 'createdAt', label: '创建日期', width: '140px' },
-]
+// label 同样走 i18n，保证 VirtualTable 默认表头（未用插槽时）也能切换语言
+const tableColumns = computed(() => [
+  { key: 'id', label: t('admin.col.id'), width: '80px' },
+  { key: 'name', label: t('admin.col.name'), width: '140px' },
+  { key: 'email', label: t('admin.col.email'), width: '200px' },
+  { key: 'role', label: t('admin.col.role'), width: '100px' },
+  { key: 'status', label: t('admin.col.status'), width: '80px' },
+  { key: 'department', label: t('admin.col.department'), width: '120px' },
+  { key: 'city', label: t('admin.col.city'), width: '100px' },
+  { key: 'createdAt', label: t('admin.col.createdAt'), width: '140px' },
+])
 
 // ===== 下拉选项数据 =====
-const roleOptions = [
-  { label: '管理员', value: '管理员' },
-  { label: '编辑', value: '编辑' },
-  { label: '普通用户', value: '普通用户' },
-  { label: '访客', value: '访客' },
-]
+// value 是稳定的机器值，label 是当前语言的展示文本；选项与行内标签共用同一份数据
+const roleOptions = computed(() =>
+  USER_ROLES.map((value) => ({ label: t('admin.role.' + value), value })),
+)
 
-const statusOptions = [
-  { label: '启用', value: '启用' },
-  { label: '禁用', value: '禁用' },
-]
+const statusOptions = computed(() =>
+  USER_STATUSES.map((value) => ({ label: t('admin.status.' + value), value })),
+)
+
+// 行内渲染用映射表，避免虚拟表格每次滚动都重复解析 i18n key；
+// 用 Record<string, string> 让后端返回未知值时仍能回退为原始文本
+const roleLabels = computed(() =>
+  Object.fromEntries(roleOptions.value.map((o) => [o.value, o.label])) as Record<string, string>,
+)
+
+const statusLabels = computed(() =>
+  Object.fromEntries(statusOptions.value.map((o) => [o.value, o.label])) as Record<string, string>,
+)
 
 // ===== 数据获取器：按环境变量切换 mock / 真实 API =====
 const resolvedFetcher =
@@ -171,7 +164,7 @@ const {
   pageSize,
   fetch,
   onPageChange: tablePageChange,
-} = useTable<UserRow>(resolvedFetcher as (params: PageParams) => Promise<PageResult<UserRow>>)
+} = useTable<AdminUser>(resolvedFetcher as (params: PageParams) => Promise<PageResult<AdminUser>>)
 
 // ===== 事件处理 =====
 function handleSearch() {

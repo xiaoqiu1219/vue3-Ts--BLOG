@@ -3,10 +3,10 @@
     <!-- ====== 1. Hero ====== -->
     <section class="blog-hero">
       <div class="blog-hero-content">
-        <h1 class="hero-title">KOKO的博客</h1>
-        <p class="hero-subtitle">探索代码、技术与生活的无限可能</p>
-        <TypeWriter text="长风破浪会有时，直挂云帆济沧海。" />
-        <button class="hero-cta" @click="scrollDown">了解更多</button>
+        <h1 class="hero-title">{{ t('nav.brand') }}</h1>
+        <p class="hero-subtitle">{{ t('blog.heroSubtitle') }}</p>
+        <TypeWriter :text="t('blog.typewriter')" />
+        <button class="hero-cta" @click="scrollDown">{{ t('blog.heroCta') }}</button>
       </div>
     </section>
 
@@ -14,9 +14,9 @@
     <section class="blog-section">
       <div class="container">
         <div class="stats-bar">
-          <div class="stat-cell" v-for="s in stats" :key="s.label">
+          <div class="stat-cell" v-for="s in stats" :key="s.key">
             <span class="stat-num">{{ animatedValues[s.key] ?? 0 }}</span>
-            <span class="stat-label">{{ s.label }}</span>
+            <span class="stat-label">{{ t(s.label) }}</span>
           </div>
         </div>
       </div>
@@ -29,19 +29,19 @@
 
     <!-- ====== 3. Bento 导航宫格 ====== -->
     <section class="blog-section container">
-      <h2 class="section-title">探索</h2>
+      <h2 class="section-title">{{ t('blog.explore') }}</h2>
       <div class="bento-grid">
         <RouterLink v-for="item in bentoItems" :key="item.path" :to="item.path" class="bento-card" :style="{ '--accent': item.color }">
           <span class="bento-icon">{{ item.icon }}</span>
-          <span class="bento-label">{{ item.label }}</span>
-          <span class="bento-desc">{{ item.desc }}</span>
+          <span class="bento-label">{{ t(item.label) }}</span>
+          <span class="bento-desc">{{ t(item.desc) }}</span>
         </RouterLink>
       </div>
     </section>
 
     <!-- ====== 4. 置顶推荐文章 ====== -->
     <section v-if="featuredArticle" class="blog-section container">
-      <h2 class="section-title">推荐阅读</h2>
+      <h2 class="section-title">{{ t('blog.featured') }}</h2>
       <RouterLink :to="featuredArticle.path" class="featured-card">
         <div class="featured-bg"></div>
         <div class="featured-body">
@@ -57,14 +57,14 @@
     <!-- ====== 5. 关于我 + 技能雷达 ====== -->
     <section class="blog-section container">
       <SectionCard :delay="100">
-        <h2 class="section-title">关于我</h2>
+        <h2 class="section-title">{{ t('blog.about') }}</h2>
         <div class="about-content">
           <div class="about-avatar">
             <div class="avatar-placeholder">G</div>
           </div>
           <div class="about-text">
-            <p>一名热爱技术的前端开发者，专注于 Vue 生态与交互体验。</p>
-            <p>这里记录我的学习、思考和成长轨迹。</p>
+            <p>{{ t('blog.aboutP1') }}</p>
+            <p>{{ t('blog.aboutP2') }}</p>
           </div>
         </div>
 
@@ -73,7 +73,7 @@
           <div v-for="skill in skills" :key="skill.name" class="skill-bar-item">
             <div class="skill-bar-head">
               <span class="skill-bar-name">{{ skill.name }}</span>
-              <span class="skill-bar-year">{{ skill.years }}</span>
+              <span class="skill-bar-year">{{ t('blog.skills.years', { n: skill.years }) }}</span>
             </div>
             <div class="skill-bar-track">
               <div class="skill-bar-fill" :style="{ width: skill.level + '%', background: skill.color }"></div>
@@ -87,8 +87,8 @@
     <section class="blog-section container">
       <SectionCard :delay="150">
         <div class="mini-timeline-head">
-          <h2 class="section-title" style="margin-bottom: 0;">成长轨迹</h2>
-          <RouterLink to="/timeline" class="mini-timeline-more">查看全部 →</RouterLink>
+          <h2 class="section-title" style="margin-bottom: 0;">{{ t('blog.growth') }}</h2>
+          <RouterLink to="/timeline" class="mini-timeline-more">{{ t('blog.viewAll') }}</RouterLink>
         </div>
         <div class="mini-timeline">
           <div v-for="(item, i) in miniTimeline" :key="i" class="mini-tl-node">
@@ -109,12 +109,15 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, nextTick, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import MusicPlayer from '@/components/blog/MusicPlayer.vue'
 import TypeWriter from '@/components/blog/TypeWriter.vue'
 import SectionCard from '@/components/blog/SectionCard.vue'
 import { articles } from '@/views/articles/articles-data'
 import { stats as statsBase, bentoItems, skills, miniTimeline } from '@/data/homepage'
+
+const { t } = useI18n()
 
 // ==================== 数据看板（动态 target 从文章数据计算） ====================
 const stats = statsBase.map(s => {
