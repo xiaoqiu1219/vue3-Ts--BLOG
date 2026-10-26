@@ -1,11 +1,11 @@
 ---
 name: commit-and-push
-description: 用于提交和推送代码。当用户说"提交代码"、"推送代码"、"push"、"commit"、"提交并推送"、"发布代码"时触发。自动完成代码审查、简化、提交和双远程推送。
+description: 用于提交和推送代码。当用户说"提交代码"、"推送代码"、"push"、"commit"、"提交并推送"、"发布代码"时触发。自动完成代码审查、简化、提交并推送到 GitHub。
 ---
 
 # 提交并推送代码
 
-提交代码的标准化流程，确保每次都经过质量检查并推送到所有远程仓库。
+提交代码的标准化流程，确保每次都经过质量检查并推送到 GitHub。
 
 ## 触发条件
 
@@ -17,14 +17,21 @@ description: 用于提交和推送代码。当用户说"提交代码"、"推送�
 
 ## 远程仓库
 
-本项目有**两个**远程仓库，推送时必须**同时推送**：
+本项目只推送到 GitHub：
 
 | 远程名 | 地址 |
 |--------|------|
-| `origin` | `https://gitee.com/garvey-jia/practice-with-vue3.git`（Gitee） |
-| `github` | `https://github.com/xiaoqiu1219/vue3-Ts--BLOG.git`（GitHub） |
+| `origin` | `https://github.com/xiaoqiu1219/vue3-Ts--BLOG.git`（GitHub） |
 
-GitHub 仓库关联了 GitHub Actions 自动部署到 GitHub Pages，只推到 Gitee 不会触发线上更新。
+该仓库关联了 GitHub Actions 自动部署到 GitHub Pages。**不要**再添加或推送到 Gitee 等其他远程。
+
+推送前先确认远端配置：
+
+```bash
+git remote -v
+```
+
+如果 `origin` 不是上面的 GitHub 地址，先停下来告知用户，不要擅自修改远端配置。
 
 ## 提交流程
 
@@ -63,21 +70,17 @@ git commit -m "type(scope): 中文描述"
 
 提交前 preCommit hooks 会自动执行 ESLint + vue-tsc 检查。
 
-### 第 4 步：双远程推送
-
-**必须同时推送到两个远程仓库**：
+### 第 4 步：推送到 GitHub
 
 ```bash
 git push origin master
-git push github master
 ```
 
-如果某个远程推送失败，报告错误但不要阻塞 — 另一个远程可能仍然推送成功。
+如果推送失败（网络、认证等），报告错误并保留本地提交，不要自动改用其他远程。
 
 ### 第 5 步：确认结果
 
 汇总提交和推送结果，告知用户：
 - 提交的 hash 和 message
-- origin（Gitee）推送状态
-- github（GitHub）推送状态
-- 如果推到了 GitHub，部署到 GitHub Pages 通常需要 1-2 分钟
+- origin（GitHub）推送状态
+- 部署到 GitHub Pages 通常需要 1-2 分钟
