@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="KOKO的博客——Vue 3 + TypeScript 个人技术博客，记录前端学习、思考与成长轨迹。">
     <title>KOKO的博客</title>
     <script>
       // 明暗主题：在页面渲染前读取 localStorage，防止闪烁
@@ -28,6 +29,53 @@
           history.replaceState(null, null, redirect);
         }
       })();
+    </script>
+    <!-- 站点级结构化数据：WebSite / Person / Blog（文章级 BlogPosting 在文章页动态注入） -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#website",
+          "url": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/",
+          "name": "KOKO的博客",
+          "alternateName": ["KOKO Blog", "KOKO 的技术博客"],
+          "description": "Vue 3 + TypeScript 个人技术博客，记录前端学习、思考与成长轨迹。",
+          "inLanguage": "zh-CN",
+          "publisher": { "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#person",
+          "name": "KOKO",
+          "alternateName": "小Q",
+          "url": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/",
+          "jobTitle": "前端开发工程师",
+          "description": "一名热爱技术的前端开发者，专注于 Vue 生态与交互体验，拥有 5 年前端开发经验。",
+          "knowsAbout": [
+            "Vue 3",
+            "Vue 2",
+            "TypeScript",
+            "UniApp 跨端开发",
+            "ECharts 数据可视化",
+            "Node.js",
+            "CI/CD"
+          ],
+          "sameAs": ["https://github.com/xiaoqiu1219"]
+        },
+        {
+          "@type": "Blog",
+          "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#blog",
+          "url": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/articles",
+          "name": "KOKO的博客 · 文章",
+          "description": "技术思考、实战总结与面试精进。",
+          "inLanguage": "zh-CN",
+          "author": { "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#person" },
+          "publisher": { "@id": "https://xiaoqiu1219.github.io/vue3-Ts--BLOG/#person" }
+        }
+      ]
+    }
     </script>
   </head>
   <body>

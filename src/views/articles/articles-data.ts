@@ -16,7 +16,7 @@ export const articles: Article[] = [
     title: '高级前端工程师面试精准答案',
     date: '2026-06-04',
     tag: '面试',
-    excerpt: '涵盖 JavaScript 核心、Vue 深度、TypeScript、工程化、性能优化、安全、UniApp 跨端、系统设计等 11 个模块共 24 道高频面试题，附详细解答、代码示例与项目实战经验。',
+    excerpt: '涵盖 JavaScript 核心、Vue 深度、TypeScript、工程化、性能优化、安全、UniApp 跨端、系统设计等 10 个模块共 24 道高频面试题，附详细解答、代码示例与项目实战经验。',
     path: '/articles/interview-advanced',
     delay: 0,
   },

@@ -6,14 +6,14 @@
         <div class="hero-breadcrumb">
           <RouterLink to="/articles" class="breadcrumb-link">{{ t('interview.back') }}</RouterLink>
         </div>
-        <h1 class="hero-title">高级前端工程师面试精准答案</h1>
-        <p class="hero-desc">涵盖 JavaScript 核心、Vue 深度、TypeScript、工程化、性能优化、安全、UniApp 跨端、系统设计与软技能等 11 个模块，共 24 道高频面试题，附详细解答与项目实战代码。</p>
+        <h1 class="hero-title">{{ articleMeta.title }}</h1>
+        <p class="hero-desc">{{ articleMeta.description }}</p>
         <div class="hero-meta">
-          <span class="meta-date">2026-06-04</span>
+          <span class="meta-date">{{ articleMeta.date }}</span>
           <span class="meta-divider">·</span>
           <span class="meta-reading">{{ t('interview.reading') }}</span>
           <span class="meta-divider">·</span>
-          <span class="meta-tag">面试</span>
+          <span class="meta-tag">{{ articleMeta.tag }}</span>
         </div>
       </div>
     </section>
@@ -85,12 +85,19 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { articleSections } from './interview-content'
+import { articleMeta, articleSchemaJson } from '@/data/schema'
 
 const { t } = useI18n()
 const sections = articleSections
 const activeSection = ref<string>('')
 // 缓存章节 DOM 元素，避免滚动时重复查询
 let sectionElements: (HTMLElement | null)[] = []
+// 文章页动态注入的 JSON-LD 脚本，离开页面时移除
+let ldJsonScript: HTMLScriptElement | null = null
+// 文章页 SEO 标签，离开页面时还原
+let descriptionMeta: HTMLMetaElement | null = null
+let previousDescription = ''
+let canonicalLink: HTMLLinkElement | null = null
 
 // 滚动到指定章节
 function scrollToSection(id: string) {
@@ -126,10 +133,33 @@ onMounted(() => {
   sectionElements = sections.map(s => document.getElementById(`section-${s.id}`))
   window.addEventListener('scroll', onScroll, { passive: true })
   onScroll()
+
+  // 注入文章级结构化数据（BlogPosting + BreadcrumbList）
+  ldJsonScript = document.createElement('script')
+  ldJsonScript.type = 'application/ld+json'
+  ldJsonScript.textContent = articleSchemaJson
+  document.head.appendChild(ldJsonScript)
+
+  // 文章页单独设置标题、描述和 canonical
+  document.title = `${articleMeta.title} - ${t('nav.brand')}`
+  descriptionMeta = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+  if (descriptionMeta) {
+    previousDescription = descriptionMeta.content
+    descriptionMeta.content = articleMeta.description
+  }
+
+  canonicalLink = document.createElement('link')
+  canonicalLink.rel = 'canonical'
+  canonicalLink.href = articleMeta.url
+  document.head.appendChild(canonicalLink)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', onScroll)
+  ldJsonScript?.remove()
+  descriptionMeta?.setAttribute('content', previousDescription)
+  canonicalLink?.remove()
+  document.title = t('nav.brand')
 })
 </script>
 
