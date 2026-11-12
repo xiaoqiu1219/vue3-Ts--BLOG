@@ -45,14 +45,14 @@ git status
 
 ### 第 2 步：代码审查
 
-**必须先审查再提交**，顺序如下：
+**必须先审查再提交**，审查范围仅限本次改动：`git diff HEAD` 加 `git status` 中的未跟踪新文件，不扫描无关文件。顺序如下：
 
 1. **/code-review** — 检查 diff 中的正确性 bug 和可复用/简化/效率问题
 2. 修复 code-review 发现的问题
 3. **/simplify** — 仅检查代码复用、简化、效率、架构层面（不找 bug）
 4. 应用 simplify 的建议
 
-> 注：如果是纯二进制文件（如 favicon.ico、图片等），可跳过 /code-review 和 /simplify，但仍需执行 /simplify 检查是否有其他代码改动需要清理。
+> 注：纯二进制文件（如 favicon.ico、图片等）可跳过两项审查；若同批还有代码文件，仍需审查代码部分。
 
 ### 第 3 步：暂存并提交
 
@@ -68,7 +68,11 @@ git commit -m "type(scope): 中文描述"
 - 遵循 conventional commits 格式：`type(scope): 中文描述`
 - 常用 type：`feat`（新功能）、`fix`（修复）、`chore`（杂项）、`style`（样式）、`refactor`（重构）、`docs`（文档）、`ci`（CI/CD）
 
-提交前 preCommit hooks 会自动执行 ESLint + vue-tsc 检查。
+提交前 preCommit hook 只对**暂存区里有改动的代码文件**执行 oxlint + ESLint（只校验，不自动修复）：
+
+- 涉及 `package.json`、`tsconfig*.json`、`eslint.config.ts`、`vite.config.ts` 等配置改动时，手动执行 `npx oxlint . && npx eslint .` 做一次全量校验
+- 改动 TS/Vue 源码时建议本地跑 `npm run type-check`（类型检查无法按文件裁剪，CI 构建也会兜底）
+- CI 的 `ci.yml` 仍会对全项目执行 ESLint 和类型检查
 
 ### 第 4 步：推送到 GitHub
 

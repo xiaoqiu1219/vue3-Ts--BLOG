@@ -1,1 +1,23 @@
-npm run lint
+# 只校验暂存区里有改动的代码文件，避免全项目扫描
+# -z + xargs -0：安全处理含空格/中文的路径
+# 只校验不 --fix：不改写工作区，避免自动修复混入提交
+set -e
+
+list=$(mktemp)
+trap 'rm -f "$list"' EXIT
+
+git diff --cached -z --name-only --diff-filter=ACMR -- \
+  '*.js' '*.jsx' '*.mjs' '*.cjs' '*.ts' '*.tsx' '*.mts' '*.cts' '*.vue' > "$list"
+
+if [ ! -s "$list" ]; then
+  echo "pre-commit: 没有改动的代码文件，跳过 lint"
+  exit 0
+fi
+
+echo "pre-commit: 校验以下改动文件"
+while IFS= read -r -d '' file; do
+  printf '%s\n' "$file"
+done < "$list"
+
+xargs -0 ./node_modules/.bin/oxlint < "$list"
+xargs -0 ./node_modules/.bin/eslint --cache --no-warn-ignored < "$list"
