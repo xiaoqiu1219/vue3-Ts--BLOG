@@ -1,0 +1,80 @@
+# KOKO的博客（vue3-Ts--BLOG）
+
+> 一个使用 Vue 3.5 + TypeScript 5.9 + Vite 7 构建的个人博客系统，附带后台管理系统。包含虚拟滚动表格（百万级数据）、虚拟下拉选择器（万级选项）、Canvas 星空/鼠标特效、音乐播放器（歌词同步）、中英文国际化（vue-i18n）、暗色/亮色主题切换、打地鼠与猜数字小游戏等功能。状态管理使用 Pinia 3，路由使用 Vue Router 5（History 模式，全部懒加载）。
+
+## 语言与规范
+
+- 所有代码注释、commit message、文档使用中文
+- 提交遵循 Conventional Commits 规范（Husky + Commitlint 强制校验），类型：feat / fix / docs / style / refactor / perf / test / chore / ci / build
+- Lint 使用 Oxlint + ESLint 双引擎，格式化使用 Prettier；提交代码前执行 `npm run lint`
+- 路径别名 `@` 指向 `src/`（见 vite.config.ts）
+- Node 版本要求：`^20.19.0 || >=22.12.0`
+
+## 快速命令
+
+```sh
+npm install       # 安装依赖
+npm run dev       # 开发模式（http://localhost:5173）
+npm run build     # 生产构建（含 vue-tsc 类型检查）
+npm run preview   # 预览生产构建
+npm run lint      # Oxlint + ESLint 检查并自动修复
+npm run commit    # Commitizen 交互式提交
+```
+
+## 核心架构
+
+- **数据流**：`src/data/*.ts`（策略模式数据层）→ `views/*.vue`（页面）→ `components/**/*.vue`（UI 组件）；全局状态由 `src/stores/*.ts`（Pinia）管理；接口调用统一走 `src/api/request.ts`（Axios 封装，拦截器 + token 注入 + 统一错误处理）。
+- **硬编码数据清零**：组件内禁止写死静态数据，一律抽离到 `src/data/`，组件只负责渲染。
+- **主题系统**：CSS 变量定义在 `src/assets/base.css`；暗色为默认主题，亮色通过 `[data-theme='light']` 切换；后台管理使用独立的 `--admin-*` 蓝白配色命名空间。
+- **国际化**：vue-i18n（Composition API 模式，`legacy: false`），语言包在 `src/i18n/locales/zh-CN.ts` 与 `en-US.ts`（key 结构完全一致，新增文案必须两边同步）；数据文件存 i18n key 或机器值，渲染时用 `t()` 翻译；函数式弹窗（`modal.show()`）创建独立 Vue 应用，需用 `i18n.global.t()` 而非 `useI18n()`。
+- **虚拟滚动**：基于 `@tanstack/vue-virtual`；`VirtualTable` 支持百万级行数据，`VirtualDropdown` 支持万级选项。
+- **响应式断点**：768px（平板）/ 480px（手机）；最小触控区域 44px。
+- **Mock 切换**：后台管理通过 `.env` 中 `VITE_USE_MOCK`（默认 `true`）切换 10 万条 mock 数据与真实后端 API；`VITE_API_BASE_URL` 默认 `http://localhost:8080`。
+- **生产 base 路径**：`/vue3-Ts--BLOG/`（开发模式为 `/`）。
+
+## 目录结构
+
+- `src/main.ts` — 应用入口：创建 Vue 实例 → 注册 Pinia + Router + i18n → 挂载
+- `src/App.vue` — 根组件：导航栏 + 路由视图 + 页脚 + 星空背景 + 音乐播放器
+- `src/api/` — request.ts（Axios 封装）、admin.ts（后台 API + mock 生成器）、backend.ts（问候接口）
+- `src/components/common/` — AppNavbar.vue（导航栏：下拉菜单/汉堡菜单/主题切换/语言切换）、AppFooter.vue
+- `src/components/blog/` — StarryBackground、MouseTrail、TypeWriter、ScrollReveal、SectionCard、MusicPlayer、MusicMini
+- `src/components/admin/` — SearchForm、VirtualDropdown、VirtualTable、Pagination（均含 H5 适配与骨架屏/空状态）
+- `src/components/Modal/` — 通用弹窗组件（v-model + 插件式 API `modal.show()`），有独立 README.md 文档
+- `src/composables/` — useSearch（泛型搜索表单）、useTable（分页/loading/fetcher 注入）、useVirtualScroll
+- `src/data/` — navigation、admin-navigation、homepage、features、games、timeline（策略模式数据源）
+- `src/i18n/` — i18n 实例与中英文语言包
+- `src/router/index.ts` — 全部懒加载路由
+- `src/stores/` — theme（主题持久化）、music（播放/歌词解析）、counter
+- `src/views/` — BlogHome、TimelineView、ExperienceView、FriendsView、articles/、games/、admin/AdminManage、practice 页面
+
+## 路由表
+
+| 路径 | 说明 |
+|------|------|
+| `/` | 博客首页（数据看板、文章列表、技术栈） |
+| `/timeline` | 时间线经历 |
+| `/articles` | 文章列表 |
+| `/articles/interview-advanced` | 面经文章详情 |
+| `/experience` | 经历详情页 |
+| `/friends` | 友链 |
+| `/games` | 游戏大厅 |
+| `/games/guess-number` | 猜数字游戏 |
+| `/games/whack-mole` | 打地鼠游戏 |
+| `/practice/home` · `/practice/about` · `/practice/modal` | 练手演示页面（组件通信/弹窗 API） |
+| `/admin/manage` | 后台管理（搜索区 + 虚拟表格 + 分页，10 万条 mock 数据驱动） |
+
+## 重要文档
+
+- [README.md](README.md) — 完整项目说明、文件架构、核心架构细节
+- [src/components/Modal/README.md](src/components/Modal/README.md) — 弹窗组件用法（v-model 与插件式 API）
+- [docs/superpowers/specs/](docs/superpowers/specs/) — 设计规格：博客改版、时间线页面、后台管理
+- [docs/superpowers/plans/](docs/superpowers/plans/) — 实现计划文档
+
+## 配置文件
+
+- [vite.config.ts](vite.config.ts) — Vite 配置（`@` 别名、生产 base、Vue/JSX/DevTools 插件）
+- [eslint.config.ts](eslint.config.ts) — ESLint 扁平化配置
+- [.oxlintrc.json](.oxlintrc.json) · [.prettierrc.json](.prettierrc.json) · [.commitlintrc.json](.commitlintrc.json) · [.cz-config.cjs](.cz-config.cjs) — Lint/格式化/提交规范
+- [tsconfig.json](tsconfig.json) / [tsconfig.app.json](tsconfig.app.json) / [tsconfig.node.json](tsconfig.node.json) — TypeScript 工程配置
+- [env.d.ts](env.d.ts) — Vite 环境变量类型声明
